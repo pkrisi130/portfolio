@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ========================================
+    SEO & Social Sharing Tags
+    ======================================== -->
+    <title>Kristina Petrova - Digital Designer & Illustrator</title>
+    <meta name="description" content="Portfolio of Kristina Petrova. Specializing in digital illustration, branding, character design, and visual storytelling.">
+    
+    <!-- Social Media Preview -->
+    <meta property="og:title" content="Kristina Petrova - Digital Designer">
+    <meta property="og:description" content="Check out my latest digital illustrations and brand design work.">
+    <meta property="og:image" content="photoofmyself.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================
+        1. CSS Variables
+        ========================================
+        */
+        :root {
+            --color-bg: #FDFBFA;
+            --color-text: #333333;
+            --color-text-light: #555555;
+            --color-primary: #E1B3A4;
+            --color-secondary: #A2C5BF;
+            --color-white: #FFFFFF;
+            --color-border: #eeeeee;
+            
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Inter', sans-serif;
+            
+            --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            --gradient-animated: linear-gradient(-45deg, #fce8e1, #e6f0ef, #fdfbfa, #fce8e1);
+
+            --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.03);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.1);
+
+            --border-radius-sm: 4px;
+            --border-radius-md: 6px;
+
+            --transition-main: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-card: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            
+            --cursor-size: 20px;
+            --cursor-hover-size: 50px;
+        }
+
+        /* ========================================
+        2. Global Styles & Reset
+        ========================================
+        */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            width: 0%;
+            z-index: 2000;
+            transition: width 0.1s;
+        }
+
+        /* ========================================
+        3. Custom Cursor
+        ========================================
+        */
+        .cursor {
+            position: fixed;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            border: 1px solid var(--color-text);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background-color: var(--color-text);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        body.hovering .cursor {
+            width: var(--cursor-hover-size);
+            height: var(--cursor-hover-size);
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: transparent;
+            backdrop-filter: blur(2px);
+        }
+
+        @media (max-width: 768px) {
+            *, *::before, *::after { cursor: auto; }
+            .cursor, .cursor-dot { display: none; }
+        }
+
+        /* ========================================
+        4. Utility Classes
+        ========================================
+        */
+        .container {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 8rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-primary);
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--color-text);
+        }
+
+        h1 { font-size: 4rem; font-weight: 700; letter-spacing: -1px; }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+            letter-spacing: -0.5px;
+        }
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            margin: 1rem auto 0;
+        }
+
+        h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        p { margin-bottom: 1.5rem; color: var(--color-text-light); font-size: 1rem; }
+        
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: var(--transition-main);
+        }
+        a:hover { opacity: 0.8; }
+        
+        img { max-width: 100%; height: auto; display: block; }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: var(--font-primary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-decoration: none;
+            border: none;
+            transition: var(--transition-main);
+            transform: scale(1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--color-white);
+            box-shadow: var(--shadow-soft);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+        .btn-secondary:hover {
+            background-color: var(--color-white);
+            border-color: var(--color-white);
+            box-shadow: var(--shadow-soft);
+            transform: translateY(-2px);
+        }
+
+        .cta-buttons {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* ========================================
+        5. Navigation
+        ========================================
+        */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem 0;
+            z-index: 1000;
+            transition: var(--transition-main);
+            background-color: rgba(253, 251, 250, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .main-header.scrolled {
+            box-shadow: var(--shadow-soft);
+            padding: 1rem 0;
+            background-color: rgba(253, 251, 250, 0.98);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-family: var(--font-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            font-family: var(--font-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-text-light);
+            text-decoration: none;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Mobile Menu */
+        .menu-toggle { display: none; cursor: pointer; z-index: 1001; }
+        .hamburger {
+            width: 25px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-text);
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active .hamburger span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active .hamburger span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ========================================
+        6. Hero Section
+        ========================================
+        */
+        #hero {
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0;
+            position: relative;
+            overflow: hidden; 
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.08;
+            filter: blur(80px);
+            z-index: 1;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        .shape-1 { width: 400px; height: 400px; background: #E1B3A4; top: -100px; left: -100px; animation-delay: 0s; }
+        .shape-2 { width: 500px; height: 500px; background: #A2C5BF; bottom: -150px; right: -150px; animation-delay: -5s; }
+        .shape-3 { width: 300px; height: 300px; background: #fce8e1; top: 30%; left: 10%; opacity: 0.05; animation-delay: -10s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(30px, 50px) rotate(20deg); }
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1rem;
+        }
+        
+        .hero-content .subtitle {
+            font-family: var(--font-primary);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--color-text-light);
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+            line-height: 1.1;
+        }
+        
+        .hero-content h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: var(--color-primary);
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .hero-content .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--color-text-light);
+            max-width: 550px;
+            margin: 0 auto 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+            line-height: 1.6;
+        }
+
+        .hero-content .cta-buttons {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out 0.8s forwards;
+        }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* ========================================
+        7. About Section
+        ========================================
+        */
+        #about { background-color: var(--color-white); }
+        .about-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: var(--shadow-medium);
+            border: 6px solid var(--color-white);
+            outline: 1px solid var(--color-border);
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+            transition: transform 0.3s ease;
+        }
+        .about-image:hover img { transform: scale(1.02); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .about-text h3 { font-size: 2rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: -0.5px; }
+        .about-text .highlight {
+            font-size: 1.15rem;
+            font-weight: 500;
+            font-family: var(--font-primary);
+            color: var(--color-primary);
+            display: block;
+            margin-bottom: 2rem;
+        }
+        
+        .about-tags { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+        .tag {
+            background-color: var(--color-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .tag:hover {
+            background-color: var(--color-white);
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+        8. Skills Section
+        ========================================
+        */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background-color: var(--color-white);
+            padding: 3rem 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            transition: var(--transition-main);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+        }
+        
+        .skill-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(225, 179, 164, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .skill-card:hover { transform: translateY(-5px); border-color: rgba(225, 179, 164, 0.3); }
+        .skill-card:hover::after { opacity: 1; }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            position: relative;
+            z-index: 2;
+        }
+        .skill-icon svg { width: 28px; height: 28px; stroke-width: 1.5; }
+        .skill-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; position: relative; z-index: 2; }
+        .skill-card p { font-size: 0.95rem; margin-bottom: 0; position: relative; z-index: 2; line-height: 1.6; }
+        
+        /* ========================================
+        9. Portfolio Section
+        ========================================
+        */
+        #portfolio { background-color: var(--color-white); }
+
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 4rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--color-border);
+            padding: 0.7rem 1.8rem;
+            border-radius: 30px;
+            font-family: var(--font-primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            transition: var(--transition-main);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--color-text);
+            color: var(--color-white);
+            border-color: var(--color-text);
+            box-shadow: var(--shadow-soft);
+            transform: translateY(-1px);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        @media (min-width: 1024px) {
+            .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
+            .portfolio-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+            .portfolio-item:nth-child(4) { grid-column: span 2; }
+        }
+
+        /* CARD HOVER ENHANCEMENTS */
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
+            height: 350px;
+            background-color: #f0f0f0; 
+            cursor: pointer;
+        }
+        
+        .portfolio-item.hidden { display: none; }
+        
+        .portfolio-item:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(45deg, #f0f0f0, #f9f9f9);
+            transition: var(--transition-main);
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: block;
+        }
+        
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.03);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 2rem 2rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: var(--color-white);
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+        }
+        
+        .portfolio-overlay .portfolio-category {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .portfolio-overlay .portfolio-title {
+            font-family: var(--font-primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--color-white);
+            letter-spacing: -0.5px;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* ========================================
+        10. Lightbox Modal
+        ========================================
+        */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0,0,0,0.95); /* Deep dark for focus */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(10px); /* Strong blur */
+            
+            /* True Centering */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .modal.show { opacity: 1; }
+
+        .modal-content {
+            margin: 0;
+            display: block;
+            width: auto;
+            max-width: 85%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.6);
+            animation: zoomIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        @keyframes zoomIn { from {transform:scale(0.98); opacity: 0;} to {transform:scale(1); opacity: 1;} }
+
+        .modal-caption {
+            margin-top: 1.5rem;
+            display: block;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: auto;
+            font-family: var(--font-primary);
+        }
+        .modal-caption h3 { 
+            color: var(--color-white); 
+            margin-bottom: 0.25rem; 
+            font-size: 1.5rem; 
+            font-weight: 500; 
+            letter-spacing: -0.5px;
+        }
+        .modal-caption p {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* NEW: Gallery Thumbnails inside Modal */
+        .modal-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .modal-gallery img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+            border: 1px solid transparent;
+        }
+        .modal-gallery img:hover, .modal-gallery img.active {
+            opacity: 1;
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        /* NEW: Concept Switcher Tabs - MINIMAL STUDIO STYLE */
+        .modal-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 40px; /* Clean, airy spacing */
+            margin-bottom: 20px;
+            margin-top: 15px;
+            border: none; /* No structural borders */
+            padding: 0;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            font-family: var(--font-primary);
+            font-size: 0.9rem; /* Elegant, restrained size */
+            font-weight: 400; /* Normal weight for inactive */
+            color: rgba(255,255,255,0.4); /* Subtle inactive state */
+            cursor: pointer;
+            padding: 8px 0; /* Vertical padding only, text width determines underline */
+            position: relative;
+            transition: color 0.3s ease, opacity 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px; /* Professional spacing */
+        }
+
+        /* Smooth Underline Animation */
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px; /* Minimal thin line */
+            background-color: #FFFFFF;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .tab-btn:hover {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .tab-btn.active {
+            color: #FFFFFF; /* Pure White */
+            font-weight: 600;
+            opacity: 1;
+        }
+
+        .tab-btn.active::after {
+            transform: scaleX(1);
+        }
+
+        /* Clear Label Styling */
+        .concept-label {
+            display: block;
+            text-align: center;
+            font-size: 1.1rem; /* Larger title */
+            font-weight: 500;
+            color: var(--color-white); /* High visibility */
+            margin-top: 10px;
+            margin-bottom: 20px; /* Clear spacing above images */
+            font-family: var(--font-primary);
+            letter-spacing: 0.5px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Smooth fade for image switching */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: rgba(255,255,255,0.7);
+            font-size: 40px;
+            font-weight: 300;
+            transition: 0.3s;
+            z-index: 2001;
+            line-height: 1;
+            padding: 10px;
+        }
+        .close-modal:hover, .close-modal:focus { color: var(--color-white); transform: rotate(90deg); }
+
+        @media only screen and (max-width: 700px){ 
+            .modal-content { width: 95%; } 
+            .close-modal { top: 10px; right: 15px; }
+        }
+
+        /* ========================================
+        11. Process Section
+        ========================================
+        */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem; /* Increased spacing */
+            position: relative;
+        }
+        
+        @media (min-width: 769px) {
+            .process-steps { padding: 0 2rem; }
+            .process-step:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: -2.5rem;
+                transform: translateY(-50%);
+                width: 3rem;
+                height: 1px; /* Thinner line */
+                background-color: var(--color-border);
+                z-index: 1;
+            }
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 2rem 1.5rem;
+            background: var(--color-white);
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--color-border);
+            transition: transform 0.3s ease;
+        }
+        .process-step:hover { transform: translateY(-5px); border-color: var(--color-primary); }
+
+        .step-number {
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: var(--font-primary);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--color-primary);
+            background-color: #fff5f2; /* Lighter background */
+            border: 1px solid var(--color-primary);
+        }
+
+        .process-step h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .process-step p { font-size: 0.9rem; margin-bottom: 0; opacity: 0.8; }
+
+        /* ========================================
+        12. Contact Section
+        ========================================
+        */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 5rem;
+        }
+        
+        @media (min-width: 992px) { .contact-content { grid-template-columns: 1fr 1.2fr; } }
+
+        .contact-info h3 { font-size: 2rem; margin-bottom: 1rem; letter-spacing: -0.5px; }
+        .contact-info p { font-size: 1.1rem; max-width: 400px; line-height: 1.6; }
+
+        .social-links { margin-top: 2rem; display: flex; gap: 1.5rem; }
+        .social-links a { display: block; width: 44px; height: 44px; transition: var(--transition-main); }
+        .social-links a svg { width: 100%; height: 100%; fill: var(--color-text-light); transition: var(--transition-main); }
+        .social-links a:hover svg { fill: var(--color-primary); transform: scale(1.1); }
+        
+        /* Contact Form */
+        .contact-form { width: 100%; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem; letter-spacing: 0.5px; }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            font-family: var(--font-secondary);
+            font-size: 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-sm);
+            background-color: var(--color-white);
+            transition: var(--transition-main);
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(225, 179, 164, 0.2); /* Softer focus */
+        }
+
+        .form-group textarea { min-height: 150px; resize: vertical; }
+        .contact-form .btn-primary { width: 100%; padding: 1rem; font-size: 1.1rem; }
+
+        /* ========================================
+        13. Footer
+        ========================================
+        */
+        .main-footer {
+            padding: 4rem 0; /* More spacing */
+            text-align: center;
+            background-color: var(--color-white);
+            border-top: 1px solid var(--color-border);
+            margin-top: 5rem;
+        }
+        .main-footer p { margin: 0; font-size: 0.9rem; color: var(--color-text-light); opacity: 0.7; }
+
+        /* ========================================
+        14. Media Queries
+        ========================================
+        */
+        @media (max-width: 768px) {
+            html { font-size: 15px; }
+            h1 { font-size: 2.8rem; }
+            .hero-content h1 { font-size: 3.2rem; }
+            h2 { font-size: 2rem; margin-bottom: 3rem; }
+            section { padding: 5rem 0; }
+            .container { padding: 0 1.5rem; }
+
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 0; right: 0; width: 70%; height: 100vh;
+                background-color: var(--color-white);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                flex-direction: column; justify-content: center; align-items: center; gap: 2rem;
+                transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            .nav-links.active { transform: translateX(0); }
+            .nav-links a { font-size: 1.2rem; color: var(--color-text); }
+            
+            body.nav-open::before {
+                content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background-color: rgba(0,0,0,0.3); z-index: 999;
+            }
+            body.nav-open { overflow: hidden; }
+
+            .hero-content { padding: 0 1rem; }
+            .cta-buttons { flex-direction: column; width: 80%; margin: 2rem auto 0; }
+
+            .about-content { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+            .about-image { width: 220px; height: 220px; order: -1; }
+            .about-tags { justify-content: center; }
+
+            .portfolio-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .portfolio-item:nth-child(n) { grid-column: auto; grid-row: auto; }
+            
+            .portfolio-overlay {
+                transform: translateY(0); opacity: 1; padding: 1.5rem;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 80%);
+            }
+            .portfolio-overlay .portfolio-title { font-size: 1.2rem; }
+
+            .process-steps { grid-template-columns: 1fr; gap: 2rem; }
+            .process-step:not(:last-child)::after { display: none; }
+
+            .contact-content { grid-template-columns: 1fr; gap: 3rem; }
+            .contact-info { text-align: center; }
+            .social-links { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Scroll Progress -->
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <!-- =======================
+    Header / Navigation
+    ======================== -->
+    <header class="main-header" id="main-header">
+        <div class="container nav-container">
+            <a href="#hero" class="logo hover-target">Kristina Petrova</a>
+            
+            <nav>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#about" class="hover-target">About</a></li>
+                    <li><a href="#portfolio" class="hover-target">Work</a></li>
+                    <li><a href="#contact" class="hover-target">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="menu-toggle hover-target" id="menu-toggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- =======================
+        Hero Section
+        ======================== -->
+        <section id="hero">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+
+            <div class="hero-content">
+                <span class="subtitle">Visual Designer & Illustrator</span>
+                <h1>
+                    <span id="typewriter-text">Digital Designer</span><span class="typewriter-cursor"></span>
+                </h1>
+                <p class="tagline">
+                    Helping brands stand out through distinct visual identities and immersive digital illustrations.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#portfolio" class="btn btn-primary hover-target">View Selected Work</a>
+                    <a href="#contact" class="btn btn-secondary hover-target">Get in Touch</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================
+        About Section
+        ======================== -->
+        <section id="about" class="reveal">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Hello, I'm Kristina.</h3>
+                        <span class="highlight">A designer focused on clarity, impact, and visual storytelling.</span>
+                        <p>
+                            I am a multidisciplinary designer dedicated to crafting meaningful digital experiences. My approach combines artistic intuition with strategic thinking to solve complex design challenges.
+                        </p>
+                        <p>
+                            Whether building a brand from the ground up or creating detailed illustrations, I aim for precision and purpose in every pixel. I thrive in collaborative environments and am committed to delivering high-quality, production-ready work.
+                        </p>
+                        <div class="about-tags">
+                            <span class="tag hover-target">Visual Strategy</span>
+                            <span class="tag hover-target">Digital Illustration</span>
+                            <span class="tag hover-target">Brand Identity</span>
+                            <span class="tag hover-target">Art Direction</span>
+                            <span class="tag hover-target">Problem Solving</span>
+                        </div>
+                    </div>
+                    <div class="about-image hover-target">
+                        <img src="photoofmyself.jpg" alt="Kristina Petrova">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================
+        Skills Section
+        ======================== -->
+        <section id="skills" class="reveal">
+            <div class="container">
+                <h2>Capabilities</h2>
+                <div class="skills-grid">
+                    <div class="skill-card reveal hover-target">
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                        </div>
+                        <h3>Digital Illustration</h3>
+                        <p>Custom digital artwork, character design, and visual assets tailored to your brand's unique voice.</p>
+                    </div>
+                    <div class="skill-card reveal hover-target">
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"></path></svg>
+                        </div>
+                        <h3>Brand Identity</h3>
+                        <p>Strategic logo design and comprehensive visual identity systems that communicate value and build trust.</p>
+                    </div>
+                    <div class="skill-card reveal hover-target">
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        </div>
+                        <h3>Visual Design</h3>
+                        <p>Advanced image manipulation, layout composition, and creative direction for marketing materials.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================
+        Portfolio Section
+        ======================== -->
+        <section id="portfolio" class="reveal">
+            <div class="container">
+                <h2>Selected Work</h2>
+                
+                <!-- Category Filter Buttons -->
+                <div class="portfolio-filters">
+                    <button class="filter-btn active hover-target" data-filter="all">All</button>
+                    <button class="filter-btn hover-target" data-filter="illustration">Illustration</button>
+                    <button class="filter-btn hover-target" data-filter="advertising">Advertising</button>
+                    <button class="filter-btn hover-target" data-filter="branding">Branding</button>
+                    <button class="filter-btn hover-target" data-filter="books">Book Design</button>
+                    <button class="filter-btn hover-target" data-filter="characters">Characters</button>
+                    <button class="filter-btn hover-target" data-filter="isometric">Isometric</button>
+                </div>
+
+                <!-- Empty Grid - Populated by JS -->
+                <div class="portfolio-grid"></div>
+            </div>
+        </section>
+
+        <!-- =======================
+        Process Section
+        ======================== -->
+        <section id="process" class="reveal">
+            <div class="container">
+                <h2>My Process</h2>
+                <div class="process-steps">
+                    <div class="process-step reveal hover-target">
+                        <div class="step-number">01</div>
+                        <h3>Discover</h3>
+                        <p>Analyzing the market landscape and defining the core problem to solve.</p>
+                    </div>
+                    <div class="process-step reveal hover-target">
+                        <div class="step-number">02</div>
+                        <h3>Concept</h3>
+                        <p>Translating strategy into viable visual directions and initial sketches.</p>
+                    </div>
+                    <div class="process-step reveal hover-target">
+                        <div class="step-number">03</div>
+                        <h3>Design</h3>
+                        <p>Executing high-fidelity visuals with a focus on aesthetics and function.</p>
+                    </div>
+                    <div class="process-step reveal hover-target">
+                        <div class="step-number">04</div>
+                        <h3>Refine</h3>
+                        <p>Iterating based on feedback to polish every detail to perfection.</p>
+                    </div>
+                    <div class="process-step reveal hover-target">
+                        <div class="step-number">05</div>
+                        <h3>Deliver</h3>
+                        <p>Providing optimized, production-ready assets for all use cases.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =======================
+        Contact Section
+        ======================== -->
+        <section id="contact" class="reveal">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Ready to start your project?</h3>
+                        <p>
+                            I am currently accepting new freelance projects. If you are looking for a dedicated partner to elevate your brand visually, let's connect.
+                        </p>
+                        <div class="social-links">
+                            <!-- Instagram -->
+                            <a href="https://www.instagram.com/krisi.petrowa/" target="_blank" aria-label="Instagram" class="hover-target">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.225-.148-4.771-1.664-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.584.07-4.849.148-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.058 1.281-.072 1.689-.072 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.28.072-1.688.072-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.28-.058-1.688-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.44-.645 1.44-1.44s-.645-1.44-1.44-1.44z"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <form id="contact-form" action="https://formspree.io/f/mgvgywpe" method="POST" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your full name" class="hover-target">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com" class="hover-target">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required placeholder="Tell me about your project..." class="hover-target"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary hover-target">Send Message</button>
+                        <p id="my-form-status" style="margin-top: 1rem; font-weight: 500;"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =======================
+    Footer
+    ======================== -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Kristina Petrova. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- =======================
+    Lightbox Modal
+    ======================== -->
+    <div id="portfolio-modal" class="modal">
+        <span class="close-modal hover-target">&times;</span>
+        <img class="modal-content" id="modal-img">
+        <div class="modal-caption">
+            <h3 id="modal-title"></h3>
+            <p id="modal-category"></p>
+            <div id="modal-gallery" class="modal-gallery"></div>
+        </div>
+    </div>
+    
+    <!-- =======================
+    JavaScript
+    ======================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // =========================================================================
+            // PORTFOLIO DATA CONFIGURATION
+            // =========================================================================
+            // TO ADD A NEW PROJECT:
+            // 1. Copy one of the objects below (everything between { and },)
+            // 2. Paste it into the array where you want it to appear
+            // 3. Update the details
+            // =========================================================================
+            
+            const portfolioProjects = [
+                {
+                    title: "Jeep Advertising Campaign",
+                    category: "Advertising",
+                    filterCategory: "advertising",
+                    image: "adforjeep.jpg",
+                    alt: "Jeep Ad Campaign",
+                    featured: "large" // 2x2 Feature
+                },
+                {
+                    title: "Горан Гоко Bakery",
+                    category: "Brand Identity",
+                    filterCategory: "branding",
+                    image: "goranlogo.jpg",
+                    alt: "Bakery Logo Design",
+                    // Concept 01 Images
+                    gallery: ["goranlogo.jpg", "Tshirtgoran.png", "Business-card.JPG", "websitebackground.jpg"],
+                    // Concept 02 Images (New Section)
+                    gallery2: ["gokologo.jpg", "tshirt2.jpg"]
+                },
+                {
+                    title: "Alice in Wonderland",
+                    category: "Book Cover Design",
+                    filterCategory: "books",
+                    image: "bookcoveralice.jpg",
+                    alt: "Alice in Wonderland Book Cover"
+                },
+                {
+                    title: "Gamer's Sanctuary",
+                    category: "Isometric Design",
+                    filterCategory: "isometric",
+                    image: "roomdesign.jpg",
+                    alt: "Gamer's Room Isometric Design",
+                    featured: "wide" // 2x1 Feature
+                },
+                {
+                    title: "The Protagonist",
+                    category: "Character Design",
+                    filterCategory: "characters",
+                    image: "character1.jpg",
+                    alt: "Character Illustration 1"
+                },
+                {
+                    title: "Street Style",
+                    category: "Character Design",
+                    filterCategory: "characters",
+                    image: "character2.jpg",
+                    alt: "Character Illustration 2"
+                },
+                {
+                    title: "The Visionary",
+                    category: "Character Design",
+                    filterCategory: "characters",
+                    image: "character3.jpg",
+                    alt: "Character Illustration 3"
+                },
+                {
+                    title: "Kindred Spirits",
+                    category: "Character Design",
+                    filterCategory: "characters",
+                    image: "meandyou.jpg",
+                    alt: "Couple Illustration"
+                },
+                {
+                    title: "Bright TV",
+                    category: "Cute Drawings",
+                    filterCategory: "illustration",
+                    image: "brighttv.jpg",
+                    alt: "Stylized Illustration"
+                },
+                {
+                    title: "Night Scene",
+                    category: "Atmospheric Art",
+                    filterCategory: "illustration",
+                    image: "nightpic.jpg",
+                    alt: "Environment Art"
+                }
+            ];
+
+            // 0. Render Portfolio Items
+            const portfolioGrid = document.querySelector('.portfolio-grid');
+            if (portfolioGrid) {
+                portfolioGrid.innerHTML = portfolioProjects.map((project, index) => {
+                    // Determine featured class based on data
+                    let featuredClass = '';
+                    if (project.featured === 'large') featuredClass = 'featured-large';
+                    else if (project.featured === 'wide') featuredClass = 'featured-wide';
+
+                    // Prepare gallery data attributes
+                    const galleryData = project.gallery ? JSON.stringify(project.gallery).replace(/"/g, '&quot;') : '[]';
+                    const galleryData2 = project.gallery2 ? JSON.stringify(project.gallery2).replace(/"/g, '&quot;') : '[]';
+
+                    return `
+                    <div class="portfolio-item item-${index + 1} reveal hover-target ${featuredClass}" 
+                         data-category="${project.filterCategory}"
+                         data-gallery="${galleryData}"
+                         data-gallery2="${galleryData2}">
+                        <div class="portfolio-image">
+                            <img src="${project.image}" alt="${project.alt}">
+                        </div>
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-category">${project.category}</span>
+                            <h3 class="portfolio-title">${project.title}</h3>
+                        </div>
+                    </div>
+                `}).join('');
+            }
+
+            // 1. Custom Cursor
+            const cursor = document.querySelector('.cursor');
+            const cursorDot = document.querySelector('.cursor-dot');
+            const hoverTargets = document.querySelectorAll('.hover-target');
+
+            document.addEventListener('mousemove', (e) => {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            // Re-apply listeners to dynamically added items
+            document.addEventListener('mouseover', (e) => {
+                if(e.target.closest('.hover-target')) {
+                    document.body.classList.add('hovering');
+                } else {
+                    document.body.classList.remove('hovering');
+                }
+            });
+
+            // 2. Typewriter Effect
+            const textElement = document.getElementById('typewriter-text');
+            const phrases = ["Digital Designer", "Illustrator", "Visual Storyteller"];
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typeSpeed = 100;
+
+            function type() {
+                const currentPhrase = phrases[phraseIndex];
+                if (isDeleting) {
+                    textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                    charIndex--;
+                    typeSpeed = 50;
+                } else {
+                    textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                    charIndex++;
+                    typeSpeed = 100;
+                }
+
+                if (!isDeleting && charIndex === currentPhrase.length) {
+                    isDeleting = true;
+                    typeSpeed = 2000;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    typeSpeed = 500;
+                }
+                setTimeout(type, typeSpeed);
+            }
+            setTimeout(type, 1000);
+
+            // 3. Scroll Progress
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                document.getElementById('progress-bar').style.width = scrollPercentage + '%';
+            });
+
+            // 4. Header Scroll
+            const header = document.getElementById('main-header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) { header.classList.add('scrolled'); } 
+                    else { header.classList.remove('scrolled'); }
+                });
+            }
+
+            // 5. Mobile Menu
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+            const body = document.body;
+
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                    body.classList.toggle('nav-open');
+                });
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            menuToggle.classList.remove('active');
+                            body.classList.remove('nav-open');
+                        }
+                    });
+                });
+            }
+
+            // 6. Scroll Reveal
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 7. Contact Form
+            const form = document.getElementById("contact-form");
+            async function handleSubmit(event) {
+                event.preventDefault();
+                const status = document.getElementById("my-form-status");
+                const data = new FormData(event.target);
+                fetch(event.target.action, {
+                    method: form.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                }).then(response => {
+                    if (response.ok) {
+                        status.innerHTML = "Thanks for your submission! I will get back to you soon.";
+                        status.style.color = "green";
+                        form.reset();
+                    } else {
+                        response.json().then(data => {
+                            if (Object.hasOwn(data, 'errors')) {
+                                status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                            } else {
+                                status.innerHTML = "Oops! There was a problem submitting your form";
+                            }
+                            status.style.color = "red";
+                        })
+                    }
+                }).catch(error => {
+                    status.innerHTML = "Oops! There was a problem submitting your form";
+                    status.style.color = "red";
+                });
+            }
+            if(form) form.addEventListener("submit", handleSubmit);
+
+            // 8. Filters & Modal
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const modal = document.getElementById('portfolio-modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalTitle = document.getElementById('modal-title');
+            const modalCat = document.getElementById('modal-category');
+            const modalGallery = document.getElementById('modal-gallery');
+            const closeModal = document.querySelector('.close-modal');
+
+            // Filtering
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filterValue = btn.getAttribute('data-filter');
+                    
+                    const items = document.querySelectorAll('.portfolio-item'); // Re-select dynamic items
+                    items.forEach(item => {
+                        const category = item.getAttribute('data-category');
+                        if (filterValue === 'all' || category === filterValue) {
+                            item.classList.remove('hidden');
+                            item.classList.add('reveal');
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Modal Event Delegation
+            if (portfolioGrid) {
+                portfolioGrid.addEventListener('click', (e) => {
+                    const item = e.target.closest('.portfolio-item');
+                    if (item && modal) {
+                        e.preventDefault();
+                        const img = item.querySelector('img');
+                        const title = item.querySelector('.portfolio-title').innerText;
+                        const cat = item.querySelector('.portfolio-category').innerText;
+                        const galleryData1 = JSON.parse(item.getAttribute('data-gallery') || '[]');
+                        const galleryData2 = JSON.parse(item.getAttribute('data-gallery2') || '[]');
+                        
+                        modal.style.display = "flex"; 
+                        setTimeout(() => modal.classList.add('show'), 10);
+                        
+                        modalTitle.innerText = title;
+                        modalCat.innerText = cat;
+                        body.style.overflow = "hidden";
+
+                        modalGallery.innerHTML = '';
+                        
+                        // --- MULTI-CONCEPT LOGIC ---
+                        if (galleryData2.length > 0) {
+                            const tabsContainer = document.createElement('div');
+                            tabsContainer.className = 'modal-tabs';
+                            
+                            const btn1 = document.createElement('button');
+                            btn1.className = 'tab-btn active';
+                            btn1.innerText = 'Concept 01';
+                            
+                            const btn2 = document.createElement('button');
+                            btn2.className = 'tab-btn';
+                            btn2.innerText = 'Concept 02';
+                            
+                            tabsContainer.appendChild(btn1);
+                            tabsContainer.appendChild(btn2);
+                            modalGallery.appendChild(tabsContainer);
+
+                            const subtitle = document.createElement('span');
+                            subtitle.className = 'concept-label';
+                            modalGallery.appendChild(subtitle);
+
+                            const thumbsContainer = document.createElement('div');
+                            thumbsContainer.className = 'modal-gallery';
+                            thumbsContainer.style.marginTop = '0';
+                            modalGallery.appendChild(thumbsContainer);
+
+                            const updateView = (images) => {
+                                modalImg.classList.remove('fade-in');
+                                void modalImg.offsetWidth;
+                                modalImg.src = images[0];
+                                modalImg.classList.add('fade-in');
+
+                                thumbsContainer.innerHTML = '';
+                                images.forEach(src => {
+                                    const thumb = document.createElement('img');
+                                    thumb.src = src;
+                                    thumb.onclick = () => { 
+                                        modalImg.src = src; 
+                                        modalImg.classList.add('fade-in');
+                                        setTimeout(() => modalImg.classList.remove('fade-in'), 400);
+                                    };
+                                    thumbsContainer.appendChild(thumb);
+                                });
+                            };
+
+                            const renderConcept = (conceptNum) => {
+                                if(conceptNum === 1) {
+                                    btn1.classList.add('active');
+                                    btn2.classList.remove('active');
+                                    subtitle.innerText = "Concept 01 — Primary Direction";
+                                    updateView(galleryData1);
+                                } else {
+                                    btn1.classList.remove('active');
+                                    btn2.classList.add('active');
+                                    subtitle.innerText = "Concept 02 — Alternative Direction";
+                                    updateView(galleryData2);
+                                }
+                            };
+
+                            btn1.onclick = () => renderConcept(1);
+                            btn2.onclick = () => renderConcept(2);
+                            renderConcept(1);
+
+                        } else {
+                            // --- SINGLE CONCEPT ---
+                            modalImg.src = img.src;
+                            if (galleryData1.length > 0) {
+                                galleryData1.forEach(src => {
+                                    const thumb = document.createElement('img');
+                                    thumb.src = src;
+                                    thumb.onclick = () => { modalImg.src = src; };
+                                    modalGallery.appendChild(thumb);
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Close Modal Functions
+            const closeModalFunc = () => {
+                modal.classList.remove('show');
+                setTimeout(() => { modal.style.display = "none"; body.style.overflow = "auto"; }, 300);
+            };
+
+            if (closeModal) {
+                closeModal.addEventListener('click', closeModalFunc);
+            }
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModalFunc();
+                    }
+                });
+            }
+            
+            // Close on ESC key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('show')) {
+                    closeModalFunc();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
