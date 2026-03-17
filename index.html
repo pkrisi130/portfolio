@@ -593,15 +593,21 @@
             font-weight: 500;
             font-size: 0.9rem;
             color: var(--color-text-light);
-            transition: var(--transition-main);
+            transition: all 0.3s ease;
         }
 
-        .filter-btn:hover, .filter-btn.active {
+        .filter-btn:hover {
+            color: var(--color-text);
+            border-color: #cccccc;
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        .filter-btn.active {
             background: var(--color-text);
             color: var(--color-white);
             border-color: var(--color-text);
-            box-shadow: var(--shadow-soft);
-            transform: translateY(-1px);
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-2px);
         }
 
         .portfolio-grid {
@@ -655,17 +661,21 @@
             transform: scale(1.03);
         }
 
+        /* Clean, Modern Staggered Overlay */
         .portfolio-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
+            height: 100%;
             padding: 3rem 2rem 2rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 100%);
             color: var(--color-white);
-            transform: translateY(100%);
             opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+            transition: opacity 0.4s ease;
         }
         
         .portfolio-overlay .portfolio-category {
@@ -676,6 +686,8 @@
             opacity: 0.8;
             margin-bottom: 0.5rem;
             display: block;
+            transform: translateY(15px);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         
         .portfolio-overlay .portfolio-title {
@@ -685,15 +697,21 @@
             margin: 0;
             color: var(--color-white);
             letter-spacing: -0.5px;
+            transform: translateY(15px);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) 0.05s; /* Slight delay for staggered effect */
         }
         
         .portfolio-item:hover .portfolio-overlay {
-            transform: translateY(0);
             opacity: 1;
         }
         
+        .portfolio-item:hover .portfolio-overlay .portfolio-category,
+        .portfolio-item:hover .portfolio-overlay .portfolio-title {
+            transform: translateY(0);
+        }
+        
         /* ========================================
-        10. Lightbox Modal
+        10. Lightbox Modal - PREMIUM EDITORIAL UPGRADE
         ========================================
         */
         .modal {
@@ -710,58 +728,84 @@
             transition: opacity 0.3s ease;
             backdrop-filter: blur(10px); /* Strong blur */
             
-            /* True Centering */
+            /* Center the dialog container */
+            display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
         }
-        .modal.show { opacity: 1; }
+        .modal.show { opacity: 1; display: flex !important; }
 
-        .modal-content {
-            margin: 0;
-            display: block;
-            width: auto;
-            max-width: 85%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 4px;
-            box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.6);
+        /* The wrapper holding image + text */
+        .modal-dialog {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 90vw;
+            max-height: 90vh;
+            padding: 1.5rem;
             animation: zoomIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
+
         @keyframes zoomIn { from {transform:scale(0.98); opacity: 0;} to {transform:scale(1); opacity: 1;} }
 
-        .modal-caption {
-            margin-top: 1.5rem;
-            display: block;
+        /* Image Area */
+        .modal-image-wrapper {
             width: 100%;
-            max-width: 700px;
-            text-align: center;
-            color: #ccc;
-            padding: 10px 0;
-            height: auto;
-            font-family: var(--font-primary);
-        }
-        .modal-caption h3 { 
-            color: var(--color-white); 
-            margin-bottom: 0.25rem; 
-            font-size: 1.5rem; 
-            font-weight: 500; 
-            letter-spacing: -0.5px;
-        }
-        .modal-caption p {
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin: 0;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
         }
 
-        /* NEW: Gallery Thumbnails inside Modal */
+        .modal-img {
+            max-width: 100%;
+            max-height: 60vh; /* Leave room for text on mobile */
+            object-fit: contain;
+            border-radius: 6px;
+            box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Typography & Info Area */
+        .modal-info-wrapper {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--color-white);
+        }
+
+        .modal-category-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            display: block;
+            font-weight: 500;
+        }
+
+        .modal-title {
+            color: var(--color-white);
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+            font-family: var(--font-primary);
+        }
+
+        .modal-description {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        /* Gallery Thumbnails inside Modal */
         .modal-gallery {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 20px;
             flex-wrap: wrap;
         }
         .modal-gallery img {
@@ -779,14 +823,13 @@
             border-color: rgba(255,255,255,0.5);
         }
 
-        /* NEW: Concept Switcher Tabs - MINIMAL STUDIO STYLE */
+        /* Concept Switcher Tabs - MINIMAL STUDIO STYLE */
         .modal-tabs {
             display: flex;
             justify-content: center;
-            gap: 40px; /* Clean, airy spacing */
+            gap: 40px;
             margin-bottom: 20px;
-            margin-top: 15px;
-            border: none; /* No structural borders */
+            border: none;
             padding: 0;
         }
 
@@ -794,63 +837,48 @@
             background: transparent;
             border: none;
             font-family: var(--font-primary);
-            font-size: 0.9rem; /* Elegant, restrained size */
-            font-weight: 400; /* Normal weight for inactive */
-            color: rgba(255,255,255,0.4); /* Subtle inactive state */
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.4);
             cursor: pointer;
-            padding: 8px 0; /* Vertical padding only, text width determines underline */
+            padding: 8px 0;
             position: relative;
             transition: color 0.3s ease, opacity 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 2px; /* Professional spacing */
+            letter-spacing: 2px;
         }
 
-        /* Smooth Underline Animation */
         .tab-btn::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 1px; /* Minimal thin line */
+            height: 1px;
             background-color: #FFFFFF;
             transform: scaleX(0);
             transform-origin: center;
             transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        .tab-btn:hover {
-            color: rgba(255,255,255,0.7);
-        }
+        .tab-btn:hover { color: rgba(255,255,255,0.7); }
+        .tab-btn.active { color: #FFFFFF; font-weight: 600; opacity: 1; }
+        .tab-btn.active::after { transform: scaleX(1); }
 
-        .tab-btn.active {
-            color: #FFFFFF; /* Pure White */
-            font-weight: 600;
-            opacity: 1;
-        }
-
-        .tab-btn.active::after {
-            transform: scaleX(1);
-        }
-
-        /* Clear Label Styling */
         .concept-label {
             display: block;
             text-align: center;
-            font-size: 1.1rem; /* Larger title */
+            font-size: 1.1rem;
             font-weight: 500;
-            color: var(--color-white); /* High visibility */
+            color: var(--color-white);
             margin-top: 10px;
-            margin-bottom: 20px; /* Clear spacing above images */
+            margin-bottom: 20px;
             font-family: var(--font-primary);
             letter-spacing: 0.5px;
             animation: fadeIn 0.5s ease;
         }
 
-        /* Smooth fade for image switching */
-        .fade-in {
-            animation: fadeIn 0.4s ease-in-out;
-        }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
 
         .close-modal {
             position: absolute;
@@ -863,12 +891,49 @@
             z-index: 2001;
             line-height: 1;
             padding: 10px;
+            cursor: pointer;
         }
         .close-modal:hover, .close-modal:focus { color: var(--color-white); transform: rotate(90deg); }
 
+        /* --- DESKTOP MODAL LAYOUT (Side-by-side) --- */
+        @media (min-width: 1024px) {
+            .modal-dialog {
+                flex-direction: row;
+                align-items: center; /* Center horizontally relative to each other */
+                justify-content: center;
+                gap: 4rem;
+                padding: 2rem 4rem;
+                max-width: 1300px;
+            }
+            .modal-image-wrapper {
+                flex: 1;
+                display: flex;
+                justify-content: flex-end; /* Align right to meet text naturally */
+            }
+            .modal-img {
+                max-height: 85vh; /* Take full height on desktop */
+            }
+            .modal-info-wrapper {
+                flex: 0 0 350px; /* Fixed width for perfect readability */
+                text-align: left;
+                margin-top: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                max-height: 85vh;
+                overflow-y: auto; /* Allow scrolling if text/gallery is very tall */
+                scrollbar-width: none; /* Hide scrollbar Firefox */
+            }
+            .modal-info-wrapper::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+            
+            .modal-gallery, .modal-tabs { justify-content: flex-start; }
+            .concept-label { text-align: left; }
+        }
+
         @media only screen and (max-width: 700px){ 
-            .modal-content { width: 95%; } 
             .close-modal { top: 10px; right: 15px; }
+            .modal-dialog { padding: 1rem; }
+            .modal-title { font-size: 1.5rem; }
         }
 
         /* ========================================
@@ -1110,10 +1175,10 @@
                         <h3>Hello, I'm Kristina.</h3>
                         <span class="highlight">A designer focused on clarity, impact, and visual storytelling.</span>
                         <p>
-                            I am a multidisciplinary designer dedicated to crafting meaningful digital experiences. My approach combines artistic intuition with strategic thinking to solve complex design challenges.
+                            I’m a multidisciplinary designer still exploring and finding my style. I like experimenting with different ideas and getting a little better with every project.
                         </p>
                         <p>
-                            Whether building a brand from the ground up or creating detailed illustrations, I aim for precision and purpose in every pixel. I thrive in collaborative environments and am committed to delivering high-quality, production-ready work.
+                            I care about the small details and creating things that feel right.
                         </p>
                         <div class="about-tags">
                             <span class="tag hover-target">Visual Strategy</span>
@@ -1276,11 +1341,16 @@
     ======================== -->
     <div id="portfolio-modal" class="modal">
         <span class="close-modal hover-target">&times;</span>
-        <img class="modal-content" id="modal-img">
-        <div class="modal-caption">
-            <h3 id="modal-title"></h3>
-            <p id="modal-category"></p>
-            <div id="modal-gallery" class="modal-gallery"></div>
+        <div class="modal-dialog">
+            <div class="modal-image-wrapper">
+                <img class="modal-img" id="modal-img">
+            </div>
+            <div class="modal-info-wrapper">
+                <span id="modal-category" class="modal-category-label"></span>
+                <h3 id="modal-title" class="modal-title"></h3>
+                <p id="modal-description" class="modal-description"></p>
+                <div id="modal-gallery" class="modal-gallery"></div>
+            </div>
         </div>
     </div>
     
@@ -1301,80 +1371,114 @@
             
             const portfolioProjects = [
                 {
-                    title: "Jeep Advertising Campaign",
+                    title: "Ad For Jeep",
                     category: "Advertising",
                     filterCategory: "advertising",
                     image: "adforjeep.jpg",
                     alt: "Jeep Ad Campaign",
+                    description: "An adventurous advertising concept designed to capture the rugged, unrestrained spirit of the open road.",
                     featured: "large" // 2x2 Feature
                 },
                 {
-                    title: "Горан Гоко Bakery",
+                    title: "Goran Logo",
                     category: "Brand Identity",
                     filterCategory: "branding",
                     image: "goranlogo.jpg",
                     alt: "Bakery Logo Design",
+                    description: "A warm, character-driven brand identity built to evoke the comforting, nostalgic aroma of freshly baked pastries.",
                     // Concept 01 Images
                     gallery: ["goranlogo.jpg", "Tshirtgoran.png", "Business-card.JPG", "websitebackground.jpg"],
                     // Concept 02 Images (New Section)
                     gallery2: ["gokologo.jpg", "tshirt2.jpg"]
                 },
                 {
-                    title: "Alice in Wonderland",
+                    title: "Book Cover Alice",
                     category: "Book Cover Design",
                     filterCategory: "books",
                     image: "bookcoveralice.jpg",
-                    alt: "Alice in Wonderland Book Cover"
+                    alt: "Alice in Wonderland Book Cover",
+                    description: "A whimsical redesign capturing the surreal, magical essence of Wonderland through vibrant digital illustration."
                 },
                 {
-                    title: "Gamer's Sanctuary",
+                    title: "Room Design",
                     category: "Isometric Design",
                     filterCategory: "isometric",
                     image: "roomdesign.jpg",
                     alt: "Gamer's Room Isometric Design",
+                    description: "An isometric exploration of a cozy, personalized sanctuary tailored for the ultimate gaming experience.",
                     featured: "wide" // 2x1 Feature
                 },
                 {
-                    title: "The Protagonist",
+                    title: "Character 1",
                     category: "Character Design",
                     filterCategory: "characters",
                     image: "character1.jpg",
-                    alt: "Character Illustration 1"
+                    alt: "Character Illustration 1",
+                    description: "A study in distinct shape language and expressive personality, brought to life through clean digital strokes."
                 },
                 {
-                    title: "Street Style",
+                    title: "Character 2",
                     category: "Character Design",
                     filterCategory: "characters",
                     image: "character2.jpg",
-                    alt: "Character Illustration 2"
+                    alt: "Character Illustration 2",
+                    description: "A vibrant exploration of street-style aesthetics, emphasizing dynamic poses and modern fashion."
                 },
                 {
-                    title: "The Visionary",
+                    title: "Character 3",
                     category: "Character Design",
                     filterCategory: "characters",
                     image: "character3.jpg",
-                    alt: "Character Illustration 3"
+                    alt: "Character Illustration 3",
+                    description: "An atmospheric character portrait focusing on mood, elegant lighting, and quiet contemplation."
                 },
                 {
-                    title: "Kindred Spirits",
+                    title: "Me And You",
                     category: "Character Design",
                     filterCategory: "characters",
                     image: "meandyou.jpg",
-                    alt: "Couple Illustration"
+                    alt: "Couple Illustration",
+                    description: "A heartwarming custom illustration capturing connection and shared memories in a playful, animated style."
                 },
                 {
                     title: "Bright TV",
                     category: "Cute Drawings",
                     filterCategory: "illustration",
                     image: "brighttv.jpg",
-                    alt: "Stylized Illustration"
+                    alt: "Stylized Illustration",
+                    description: "A stylized composition blending bold, contrasting colors to recreate the cozy nostalgia of a late-night movie marathon."
                 },
                 {
-                    title: "Night Scene",
+                    title: "Night Pic",
                     category: "Atmospheric Art",
                     filterCategory: "illustration",
                     image: "nightpic.jpg",
-                    alt: "Environment Art"
+                    alt: "Environment Art",
+                    description: "An evocative environment piece exploring the interplay of soft lighting and shadow during a quiet evening."
+                },
+                {
+                    title: "Bigman",
+                    category: "Surreal Scenes",
+                    filterCategory: "illustration",
+                    image: "bigman.jpg",
+                    alt: "Bigman",
+                    description: "A surreal perspective study playing with extreme camera angles and dramatic scale against a towering urban backdrop."
+                },
+                {
+                    title: "Traveller",
+                    category: "Surreal Scenes",
+                    filterCategory: "illustration",
+                    image: "traveller.jpg",
+                    alt: "Traveller",
+                    description: "An adventurous narrative scene merging character design with an expansive, breathtaking natural landscape."
+                },
+                {
+                    title: "Cat",
+                    category: "Cute Drawings",
+                    filterCategory: "illustration",
+                    image: "cat.jpg",
+                    alt: "Cat",
+                    description: "A minimalist, charming depiction of a feline companion, using bold contrast and simple geometric forms."
                 }
             ];
 
@@ -1390,12 +1494,14 @@
                     // Prepare gallery data attributes
                     const galleryData = project.gallery ? JSON.stringify(project.gallery).replace(/"/g, '&quot;') : '[]';
                     const galleryData2 = project.gallery2 ? JSON.stringify(project.gallery2).replace(/"/g, '&quot;') : '[]';
+                    const descriptionData = project.description ? project.description.replace(/"/g, '&quot;') : '';
 
                     return `
                     <div class="portfolio-item item-${index + 1} reveal hover-target ${featuredClass}" 
                          data-category="${project.filterCategory}"
                          data-gallery="${galleryData}"
-                         data-gallery2="${galleryData2}">
+                         data-gallery2="${galleryData2}"
+                         data-description="${descriptionData}">
                         <div class="portfolio-image">
                             <img src="${project.image}" alt="${project.alt}">
                         </div>
@@ -1549,6 +1655,7 @@
             const modalImg = document.getElementById('modal-img');
             const modalTitle = document.getElementById('modal-title');
             const modalCat = document.getElementById('modal-category');
+            const modalDesc = document.getElementById('modal-description');
             const modalGallery = document.getElementById('modal-gallery');
             const closeModal = document.querySelector('.close-modal');
 
@@ -1581,6 +1688,7 @@
                         const img = item.querySelector('img');
                         const title = item.querySelector('.portfolio-title').innerText;
                         const cat = item.querySelector('.portfolio-category').innerText;
+                        const desc = item.getAttribute('data-description');
                         const galleryData1 = JSON.parse(item.getAttribute('data-gallery') || '[]');
                         const galleryData2 = JSON.parse(item.getAttribute('data-gallery2') || '[]');
                         
@@ -1589,6 +1697,7 @@
                         
                         modalTitle.innerText = title;
                         modalCat.innerText = cat;
+                        modalDesc.innerText = desc || '';
                         body.style.overflow = "hidden";
 
                         modalGallery.innerHTML = '';
