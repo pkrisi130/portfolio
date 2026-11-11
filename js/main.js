@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
             images.slice(1).forEach(preload);
         };
 
-        const render = index => {
+        const render = (index, { announce = false } = {}) => {
             const p = projects[index];
             if (!p) return;
             current = index;
@@ -272,7 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
             showImage(images[0], p.alt);
             renderThumbs(images, p.alt);
             viewer.scrollTop = 0;
-            vLive.textContent = `${p.title}, project ${pos + 1} of ${order.length}`;
+            // When browsing with prev/next, tell screen readers which project is now shown
+            vLive.textContent = announce ? `${p.title}, project ${pos + 1} of ${order.length}` : '';
             document.title = `${p.title} — Kristina Petrova`;
 
             // Make the next/previous project appear instantly
@@ -299,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (order.length < 2) return;
             const pos = order.indexOf(current);
             const next = order[(pos + dir + order.length) % order.length];
-            render(next);
+            render(next, { announce: true });
             history.replaceState({ viewer: projects[next].slug }, '', urlFor(projects[next]));
         };
 

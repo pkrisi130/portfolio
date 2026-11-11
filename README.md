@@ -40,8 +40,9 @@ Live site: https://pkrisi130.github.io/portfolio/ *(update this line if the addr
    },
    ```
 
-   **Tip — finding width/height:** on Mac, select the `-800.webp` file and press ⌘I; on Windows,
-   right-click → Properties → Details. Or just open it in the browser and look at the tab title.
+   **Tip — finding width/height:** `tools/optimize_images.py` prints a ready-to-paste
+   `cover: …, width: …, height: …` line for every image. Without it: on Mac, select the `-800.webp`
+   file and press ⌘I; on Windows, right-click → Properties → Details.
 
 4. Commit and push (or upload through github.com). Done.
 

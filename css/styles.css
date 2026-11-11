@@ -459,6 +459,12 @@ button, input, textarea { font: inherit; color: inherit; }
 
 @media (hover: hover) {
     .card:hover .card-media img { transform: scale(1.03); }
+    .card:hover .card-title {
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.2em;
+    }
 }
 
 /* Desktop: editorial grid with featured tiles; fit/background per project */

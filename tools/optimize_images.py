@@ -63,6 +63,9 @@ def process(path: Path) -> None:
         copy.thumbnail((size, size), Image.LANCZOS)
         copy.save(target, "WEBP", quality=QUALITY, method=6)
         print(f"   {target.relative_to(ROOT)}  {copy.width}x{copy.height}  {target.stat().st_size // 1024} KB")
+        if size == SIZES[0]:
+            base = str(target.relative_to(ROOT)).removesuffix(f"-{size}.webp")
+            print(f'   → for projects.js:  cover: "{base}",  width: {copy.width}, height: {copy.height},')
 
 
 def main() -> None:
