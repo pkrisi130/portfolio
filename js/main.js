@@ -78,6 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
         sections.forEach(s => spy.observe(s));
     }
 
+    // Printing: load all lazy images first so none are missing on paper
+    window.addEventListener('beforeprint', () => {
+        document.querySelectorAll('img[loading="lazy"]').forEach(img => { img.loading = 'eager'; });
+    });
+
     /* ---------- 3. Work grid & filters ---------- */
 
     const grid = document.querySelector('.work-grid');
