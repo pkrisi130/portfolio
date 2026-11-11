@@ -36,10 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (filterBar && typeof FILTERS !== 'undefined') {
         filterBar.replaceChildren(
-            el('button', { type: 'button', class: 'filter-btn active hover-target', 'data-filter': 'all', text: 'All' }),
+            el('button', { type: 'button', class: 'filter-btn active', 'data-filter': 'all', 'aria-pressed': 'true', text: 'All' }),
             ...FILTERS
                 .filter(f => visibleProjects.some(p => p.filter === f.key))
-                .map(f => el('button', { type: 'button', class: 'filter-btn hover-target', 'data-filter': f.key, text: f.label }))
+                .map(f => el('button', { type: 'button', class: 'filter-btn', 'data-filter': f.key, 'aria-pressed': 'false', text: f.label }))
         );
     }
 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (p.fit === 'contain') img.style.objectFit = 'contain';
             const featured = p.featured === 'large' ? ' featured-large' : p.featured === 'wide' ? ' featured-wide' : '';
             return el('div', {
-                class: `portfolio-item reveal hover-target${featured}`,
+                class: `portfolio-item reveal${featured}`,
                 'data-category': p.filter,
                 'data-index': String(index),
                 'data-count': String(projectImages(p).length)
@@ -65,7 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 el('div', { class: 'portfolio-image', style: p.background ? { background: p.background } : {} }, [img]),
                 el('div', { class: 'portfolio-overlay' }, [
                     el('span', { class: 'portfolio-category', text: p.label }),
-                    el('h3', { class: 'portfolio-title', text: p.title })
+                    el('h3', { class: 'portfolio-title' }, [
+                        el('button', { type: 'button', class: 'portfolio-open', 'aria-haspopup': 'dialog', text: p.title })
+                    ])
                 ])
             ]);
         }));
@@ -76,22 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return p.images && p.images.length ? p.images : [];
     }
 
-    /* ---------- 1. Custom cursor ---------- */
-    const cursor = document.querySelector('.cursor');
-    const cursorDot = document.querySelector('.cursor-dot');
-    if (cursor && cursorDot) {
-        document.addEventListener('mousemove', e => {
-            cursorDot.style.left = cursor.style.left = e.clientX + 'px';
-            cursorDot.style.top = cursor.style.top = e.clientY + 'px';
-        });
-        document.addEventListener('mouseover', e => {
-            body.classList.toggle('hovering', !!e.target.closest('.hover-target'));
-        });
-    }
-
     /* ---------- 2. Typewriter ---------- */
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const textElement = document.getElementById('typewriter-text');
-    if (textElement) {
+    if (textElement && !reduceMotion) {
         const phrases = ['Digital Designer', 'Illustrator', 'Visual Storyteller'];
         let phraseIndex = 0, charIndex = 0, isDeleting = false;
         const type = () => {
@@ -188,7 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
         filterBar.addEventListener('click', e => {
             const btn = e.target.closest('.filter-btn');
             if (!btn) return;
-            filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+            filterBar.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.toggle('active', b === btn);
+                b.setAttribute('aria-pressed', String(b === btn));
+            });
             const value = btn.dataset.filter;
             document.querySelectorAll('.portfolio-item').forEach(item => {
                 item.classList.toggle('hidden', value !== 'all' && item.dataset.category !== value);
@@ -214,11 +207,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const thumbs = (images, container, alt) => {
-        container.replaceChildren(...images.map(base => {
-            const t = el('img', { src: small(base), alt: '', loading: 'lazy', decoding: 'async' });
-            t.addEventListener('click', () => showImage(base, alt));
-            return t;
-        }));
+        const buttons = images.map((base, i) => {
+            const b = el('button', { type: 'button', class: 'thumb', 'aria-label': `Show image ${i + 1} of ${images.length}`, 'aria-current': i === 0 ? 'true' : 'false' },
+                [el('img', { src: small(base), alt: '', loading: 'lazy', decoding: 'async' })]);
+            b.addEventListener('click', () => {
+                showImage(base, alt);
+                buttons.forEach(x => x.setAttribute('aria-current', String(x === b)));
+            });
+            return b;
+        });
+        container.replaceChildren(...buttons);
     };
 
     const openProject = p => {
@@ -231,9 +229,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const tabs = el('div', { class: 'modal-tabs' });
             const label = el('span', { class: 'concept-label' });
             const thumbBox = el('div', { class: 'modal-gallery', style: { marginTop: '0' } });
-            const buttons = p.concepts.map((c, i) => el('button', { type: 'button', class: 'tab-btn', text: c.label || `Concept ${i + 1}` }));
+            const buttons = p.concepts.map((c, i) => el('button', { type: 'button', class: 'tab-btn', 'aria-pressed': 'false', text: c.label || `Concept ${i + 1}` }));
             const render = i => {
-                buttons.forEach((b, j) => b.classList.toggle('active', i === j));
+                buttons.forEach((b, j) => {
+                    b.classList.toggle('active', i === j);
+                    b.setAttribute('aria-pressed', String(i === j));
+                });
                 label.textContent = p.concepts[i].label || '';
                 showImage(p.concepts[i].images[0], p.alt);
                 thumbs(p.concepts[i].images, thumbBox, p.alt);
@@ -247,22 +248,26 @@ document.addEventListener('DOMContentLoaded', () => {
             showImage(images[0] || p.cover, p.alt);
             if (images.length > 1) thumbs(images, modalGallery, p.alt);
         }
-        modal.classList.add('show');
-        body.style.overflow = 'hidden';
+        lastTrigger = document.activeElement;
+        modal.showModal();
+        modal.scrollTop = 0;
     };
 
-    const closeModal = () => {
-        modal.classList.remove('show');
-        body.style.overflow = '';
-    };
+    let lastTrigger = null;
+    const closeModal = () => modal.close();
 
     if (grid && modal) {
         grid.addEventListener('click', e => {
             const item = e.target.closest('.portfolio-item');
-            if (item) openProject(visibleProjects[Number(item.dataset.index)]);
+            if (!item) return;
+            const btn = item.querySelector('.portfolio-open');
+            if (btn && e.target !== btn) btn.focus({ preventScroll: true });
+            openProject(visibleProjects[Number(item.dataset.index)]);
         });
         closeBtn && closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+        // Click on the dark area (not the image/text) closes the viewer
+        modal.addEventListener('click', e => { if (e.target === modal || e.target.classList.contains('modal-dialog')) closeModal(); });
+        // <dialog> closes itself on Esc; put focus back on the card that opened it
+        modal.addEventListener('close', () => { if (lastTrigger && lastTrigger.focus) lastTrigger.focus({ preventScroll: true }); });
     }
 });
