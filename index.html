@@ -6,17 +6,44 @@
 
     <title>Kristina Petrova — Visual Designer &amp; Illustrator</title>
     <meta name="description" content="Portfolio of Kristina Petrova. Specializing in digital illustration, branding, character design, and visual storytelling.">
+    <meta name="theme-color" content="#faf8f5">
 
+    <!-- SITE ADDRESS: if the site lives somewhere else (e.g. a custom domain),
+         replace https://pkrisi130.github.io/portfolio/ in the 4 lines below,
+         in the JSON-LD block, in robots.txt and in sitemap.xml -->
+    <link rel="canonical" href="https://pkrisi130.github.io/portfolio/">
+    <meta property="og:url" content="https://pkrisi130.github.io/portfolio/">
+    <meta property="og:image" content="https://pkrisi130.github.io/portfolio/images/og/og-image.jpg">
+    <meta name="twitter:image" content="https://pkrisi130.github.io/portfolio/images/og/og-image.jpg">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Kristina Petrova">
     <meta property="og:title" content="Kristina Petrova — Visual Designer &amp; Illustrator">
     <meta property="og:description" content="Check out my latest digital illustrations and brand design work.">
-    <meta property="og:image" content="images/about/kristina-portrait-1600.webp">
-    <meta property="og:type" content="website">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Kristina Petrova, Visual Designer &amp; Illustrator, next to three of her illustrations">
+    <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Ctext%20y=%22.9em%22%20font-size=%2290%22%3E%E2%9C%A8%3C/text%3E%3C/svg%3E">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Kristina Petrova",
+        "jobTitle": "Visual Designer & Illustrator",
+        "url": "https://pkrisi130.github.io/portfolio/",
+        "image": "https://pkrisi130.github.io/portfolio/images/about/kristina-portrait-800.webp",
+        "sameAs": ["https://www.instagram.com/krisi.petrowa/"],
+        "knowsAbout": ["Digital Illustration", "Brand Identity", "Character Design", "Visual Design"]
+    }
+    </script>
+
+    <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 
     <script>document.documentElement.classList.replace('no-js', 'js');</script>
     <link rel="stylesheet" href="css/styles.css">
@@ -181,6 +208,12 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
                     </div>
+                    <!-- Spam trap: people never see this field, bots fill it in and Formspree drops the message -->
+                    <div class="hp-field" aria-hidden="true">
+                        <label for="gotcha">Leave this empty</label>
+                        <input type="text" id="gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+                    </div>
+                    <p class="form-note">Your message goes to my inbox via Formspree and is only used to reply to you.</p>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                     <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
                 </form>

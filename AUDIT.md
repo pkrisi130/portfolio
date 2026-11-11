@@ -2,6 +2,10 @@
 
 Audit date: 2026-11-11 · Branch: `claude/krisi-portfolio-audit-0o1h9h` · Scope: whole repo (read-only, this file is the only addition)
 
+> **Status:** this report describes the site **before** the fixes. All 7 roadmap phases have since been
+> implemented on the same branch (pull request #1). Line numbers below refer to the original single-file
+> `index.html`, which no longer exists in that form. Open items that need Krisi's input are listed in the PR.
+
 > **Screenshot references** (`[shot: name]`) point to files captured in this audit session at
 > `/tmp/claude-0/-home-user-portfolio/9b8e87f0-88ed-5b6d-9f95-9d14f4dbf153/scratchpad/shots/`.
 > They are **not committed** (the brief allowed only AUDIT.md) and will go away when the session ends. Re-running Step 2 brings them back.
