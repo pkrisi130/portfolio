@@ -62,6 +62,21 @@ still works and the browser console (F12 → Console) tells you what's missing.
 
 ---
 
+## Sharing a single project
+
+Every project has its own link: open it on the site and press the link icon in the viewer
+(on phones it opens the share menu). Links look like
+`https://pkrisi130.github.io/portfolio/#work/goran-bakery`; the part after `#work/` is the
+project's `slug`, so **don't rename a slug once you've shared its link**.
+The browser back button closes the viewer, as people expect on phones.
+
+## Security note
+
+`index.html` has a *Content-Security-Policy* line that only allows files from this site and
+lets the form talk to Formspree. It blocks injected scripts. If you ever add something from
+another website (a YouTube video, Google Analytics, an Instagram feed), add that website's
+address to that line, or it will be blocked.
+
 ## Folder structure
 
 ```

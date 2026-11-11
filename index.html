@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +7,10 @@
     <title>Kristina Petrova — Visual Designer &amp; Illustrator</title>
     <meta name="description" content="Portfolio of Kristina Petrova. Specializing in digital illustration, branding, character design, and visual storytelling.">
     <meta name="theme-color" content="#faf8f5">
+    <!-- Security: only load files from this site; the form may only talk to Formspree.
+         If you ever embed something from another site (video, analytics, Instagram feed),
+         add its address here or it will be blocked. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; base-uri 'self'; object-src 'none'">
 
     <!-- SITE ADDRESS: if the site lives somewhere else (e.g. a custom domain),
          replace https://pkrisi130.github.io/portfolio/ in the 4 lines below,
@@ -45,7 +49,6 @@
     <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-    <script>document.documentElement.classList.replace('no-js', 'js');</script>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/projects.js" defer></script>
     <script src="js/main.js" defer></script>
@@ -71,15 +74,20 @@
 
         <!-- Intro -->
         <section class="hero" aria-labelledby="hero-title">
-            <div class="container">
-                <p class="eyebrow">Visual Designer &amp; Illustrator</p>
-                <h1 id="hero-title">Kristina Petrova</h1>
-                <p class="hero-tagline">
-                    Helping brands stand out through distinct visual identities and immersive digital illustrations.
-                </p>
-                <div class="hero-actions">
-                    <a href="#work" class="btn btn-primary">View Selected Work</a>
-                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+            <div class="container hero-inner">
+                <div class="hero-title">
+                    <p class="eyebrow">Visual Designer &amp; Illustrator</p>
+                    <h1 id="hero-title">Kristina Petrova</h1>
+                </div>
+                <div class="hero-side">
+                    <p class="hero-tagline">
+                        Helping brands stand out through distinct visual identities and immersive digital illustrations.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#work" class="btn btn-primary">View Selected Work</a>
+                        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                    </div>
+                    <a class="availability" href="#contact"><span class="dot" aria-hidden="true"></span>Available for freelance projects</a>
                 </div>
             </div>
         </section>
@@ -93,6 +101,7 @@
                 </div>
 
                 <!-- Filled from js/projects.js -->
+                <p class="visually-hidden" id="filter-status" aria-live="polite"></p>
                 <div class="work-grid"></div>
                 <noscript><p class="noscript-note">The project gallery needs JavaScript. You can also see my work on <a href="https://www.instagram.com/krisi.petrowa/">Instagram</a>.</p></noscript>
             </div>
@@ -195,18 +204,21 @@
                     </ul>
                 </div>
 
-                <form id="contact-form" action="https://formspree.io/f/mgvgywpe" method="POST" class="contact-form">
+                <form id="contact-form" action="https://formspree.io/f/mgvgywpe" method="POST" class="contact-form" novalidate>
                     <div class="field">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your full name">
+                        <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your full name" aria-describedby="name-error" data-error="Please tell me your name.">
+                        <p class="field-error" id="name-error"></p>
                     </div>
                     <div class="field">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required autocomplete="email" placeholder="your.email@example.com">
+                        <input type="email" id="email" name="email" required autocomplete="email" inputmode="email" placeholder="your.email@example.com" aria-describedby="email-error" data-error="Please enter a valid email address so I can reply.">
+                        <p class="field-error" id="email-error"></p>
                     </div>
                     <div class="field">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
+                        <textarea id="message" name="message" required minlength="10" placeholder="Tell me about your project..." aria-describedby="message-error" data-error="Please write a short message (at least 10 characters)."></textarea>
+                        <p class="field-error" id="message-error"></p>
                     </div>
                     <!-- Spam trap: people never see this field, bots fill it in and Formspree drops the message -->
                     <div class="hp-field" aria-hidden="true">
@@ -225,7 +237,10 @@
     <footer class="site-footer">
         <div class="container footer-inner">
             <p>&copy; <span id="year">2026</span> Kristina Petrova. All Rights Reserved.</p>
-            <a href="#top">Back to top ↑</a>
+            <ul class="footer-links">
+                <li><a href="https://www.instagram.com/krisi.petrowa/" target="_blank" rel="noopener">Instagram</a></li>
+                <li><a href="#top">Back to top ↑</a></li>
+            </ul>
         </div>
     </footer>
 
@@ -233,10 +248,13 @@
     <dialog id="viewer" class="viewer" aria-labelledby="viewer-title">
         <div class="viewer-bar">
             <span class="viewer-count" id="viewer-count"></span>
+            <span class="visually-hidden" id="viewer-live" aria-live="polite"></span>
+            <span class="viewer-toast" id="viewer-toast" role="status"></span>
             <div class="viewer-controls">
-                <button type="button" class="viewer-btn" id="viewer-prev" aria-label="Previous project">←</button>
-                <button type="button" class="viewer-btn" id="viewer-next" aria-label="Next project">→</button>
-                <button type="button" class="viewer-btn" id="viewer-close" aria-label="Close" autofocus>✕</button>
+                <button type="button" class="viewer-btn viewer-share" id="viewer-share" aria-label="Copy link to this project"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+                <button type="button" class="viewer-btn" id="viewer-prev" aria-label="Previous project"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                <button type="button" class="viewer-btn" id="viewer-next" aria-label="Next project"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+                <button type="button" class="viewer-btn" id="viewer-close" aria-label="Close"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
             </div>
         </div>
         <div class="viewer-body">
@@ -245,11 +263,12 @@
             </div>
             <div class="viewer-info">
                 <p class="viewer-label" id="viewer-label"></p>
-                <h2 class="viewer-title" id="viewer-title">Project</h2>
+                <h2 class="viewer-title" id="viewer-title" tabindex="-1" autofocus>Project</h2>
                 <p class="viewer-desc" id="viewer-desc"></p>
                 <dl class="viewer-facts" id="viewer-facts"></dl>
                 <div class="viewer-concepts" id="viewer-concepts" role="group" aria-label="Design directions"></div>
                 <div class="viewer-thumbs" id="viewer-thumbs"></div>
+                <p class="viewer-hint" aria-hidden="true">Arrow keys to browse &nbsp;·&nbsp; Esc to close</p>
             </div>
         </div>
     </dialog>
