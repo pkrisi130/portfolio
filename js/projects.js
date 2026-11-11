@@ -52,7 +52,9 @@ const PROJECTS = [
     width: 566, height: 800,
     alt: "Jeep Ad Campaign",
     description: "An adventurous advertising concept designed to capture the rugged, unrestrained spirit of the open road.",
-    featured: "large"
+    featured: "large",
+    fit: "contain",
+    background: "#6e5530"
   },
   {
     slug: "goran-bakery",
@@ -80,7 +82,9 @@ const PROJECTS = [
           "images/projects/goran-bakery/06-alt-tshirt"
         ]
       }
-    ]
+    ],
+    fit: "contain",
+    background: "#e6851f"
   },
   {
     slug: "alice-book-cover",
@@ -90,7 +94,9 @@ const PROJECTS = [
     cover: "images/projects/alice-book-cover/cover",
     width: 800, height: 571,
     alt: "Alice in Wonderland Book Cover",
-    description: "A whimsical redesign capturing the surreal, magical essence of Wonderland through vibrant digital illustration."
+    description: "A whimsical redesign capturing the surreal, magical essence of Wonderland through vibrant digital illustration.",
+    fit: "contain",
+    background: "#2a1c1f"
   },
   {
     slug: "gamer-room",
@@ -101,7 +107,8 @@ const PROJECTS = [
     width: 800, height: 800,
     alt: "Gamer's Room Isometric Design",
     description: "An isometric exploration of a cozy, personalized sanctuary tailored for the ultimate gaming experience.",
-    featured: "wide"
+    fit: "contain",
+    background: "#230938"
   },
   {
     slug: "character-01",
@@ -111,7 +118,9 @@ const PROJECTS = [
     cover: "images/projects/character-01/character",
     width: 556, height: 800,
     alt: "Character Illustration 1",
-    description: "A study in distinct shape language and expressive personality, brought to life through clean digital strokes."
+    description: "A study in distinct shape language and expressive personality, brought to life through clean digital strokes.",
+    fit: "contain",
+    background: "#a09e9a"
   },
   {
     slug: "character-02",
@@ -121,7 +130,9 @@ const PROJECTS = [
     cover: "images/projects/character-02/character",
     width: 800, height: 556,
     alt: "Character Illustration 2",
-    description: "A vibrant exploration of street-style aesthetics, emphasizing dynamic poses and modern fashion."
+    description: "A vibrant exploration of street-style aesthetics, emphasizing dynamic poses and modern fashion.",
+    fit: "contain",
+    background: "#ffffff"
   },
   {
     slug: "character-03",
@@ -141,7 +152,8 @@ const PROJECTS = [
     cover: "images/projects/me-and-you/me-and-you",
     width: 800, height: 694,
     alt: "Couple Illustration",
-    description: "A heartwarming custom illustration capturing connection and shared memories in a playful, animated style."
+    description: "A heartwarming custom illustration capturing connection and shared memories in a playful, animated style.",
+    focus: "50% 35%"
   },
   {
     slug: "bright-tv",
@@ -171,7 +183,8 @@ const PROJECTS = [
     cover: "images/projects/big-man/big-man",
     width: 613, height: 800,
     alt: "Bigman",
-    description: "A surreal perspective study playing with extreme camera angles and dramatic scale against a towering urban backdrop."
+    description: "A surreal perspective study playing with extreme camera angles and dramatic scale against a towering urban backdrop.",
+    focus: "50% 45%"
   },
   {
     slug: "traveller",
@@ -181,7 +194,8 @@ const PROJECTS = [
     cover: "images/projects/traveller/traveller",
     width: 613, height: 800,
     alt: "Traveller",
-    description: "An adventurous narrative scene merging character design with an expansive, breathtaking natural landscape."
+    description: "An adventurous narrative scene merging character design with an expansive, breathtaking natural landscape.",
+    focus: "50% 70%"
   },
   {
     slug: "cat",
@@ -191,7 +205,9 @@ const PROJECTS = [
     cover: "images/projects/cat/cat",
     width: 613, height: 800,
     alt: "Cat",
-    description: "A minimalist, charming depiction of a feline companion, using bold contrast and simple geometric forms."
+    description: "A minimalist, charming depiction of a feline companion, using bold contrast and simple geometric forms.",
+    fit: "contain",
+    background: "#ffffff"
   },
   {
     // Found in the repo but never shown on the old site. Set hidden: false

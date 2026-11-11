@@ -2,27 +2,21 @@
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- ========================================
-    SEO & Social Sharing Tags
-    ======================================== -->
-    <title>Kristina Petrova - Digital Designer & Illustrator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Kristina Petrova — Visual Designer &amp; Illustrator</title>
     <meta name="description" content="Portfolio of Kristina Petrova. Specializing in digital illustration, branding, character design, and visual storytelling.">
-    
-    <!-- Social Media Preview -->
-    <meta property="og:title" content="Kristina Petrova - Digital Designer">
+
+    <meta property="og:title" content="Kristina Petrova — Visual Designer &amp; Illustrator">
     <meta property="og:description" content="Check out my latest digital illustrations and brand design work.">
     <meta property="og:image" content="images/about/kristina-portrait-1600.webp">
     <meta property="og:type" content="website">
 
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Ctext%20y=%22.9em%22%20font-size=%2290%22%3E%E2%9C%A8%3C/text%3E%3C/svg%3E">
-    
-    <!-- Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
 
     <script>document.documentElement.classList.replace('no-js', 'js');</script>
     <link rel="stylesheet" href="css/styles.css">
@@ -31,243 +25,201 @@
 </head>
 <body>
 
-    <a class="skip-link" href="#portfolio">Skip to work</a>
+    <a class="skip-link" href="#work">Skip to work</a>
 
-    <!-- Scroll Progress -->
-    <div class="progress-bar" id="progress-bar"></div>
-
-    <!-- =======================
-    Header / Navigation
-    ======================== -->
-    <header class="main-header" id="main-header">
-        <div class="container nav-container">
-            <a href="#hero" class="logo">Kristina Petrova</a>
-            
-            <nav>
-                <ul class="nav-links" id="nav-links">
+    <header class="site-header" id="site-header">
+        <div class="container header-inner">
+            <a href="#top" class="wordmark">Kristina Petrova</a>
+            <nav aria-label="Main">
+                <ul class="nav-links">
+                    <li><a href="#work">Work</a></li>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#portfolio">Work</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-
-            <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
-                <span class="hamburger" aria-hidden="true">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </button>
         </div>
     </header>
 
-    <main>
+    <main id="top">
 
-        <!-- =======================
-        Hero Section
-        ======================== -->
-        <section id="hero">
-            <div class="floating-shape shape-1"></div>
-            <div class="floating-shape shape-2"></div>
-            <div class="floating-shape shape-3"></div>
-
-            <div class="hero-content">
-                <span class="subtitle">Visual Designer & Illustrator</span>
-                <h1>
-                    <span id="typewriter-text">Digital Designer</span><span class="typewriter-cursor"></span>
-                </h1>
-                <p class="tagline">
+        <!-- Intro -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <p class="eyebrow">Visual Designer &amp; Illustrator</p>
+                <h1 id="hero-title">Kristina Petrova</h1>
+                <p class="hero-tagline">
                     Helping brands stand out through distinct visual identities and immersive digital illustrations.
                 </p>
-                <div class="cta-buttons">
-                    <a href="#portfolio" class="btn btn-primary">View Selected Work</a>
+                <div class="hero-actions">
+                    <a href="#work" class="btn btn-primary">View Selected Work</a>
                     <a href="#contact" class="btn btn-secondary">Get in Touch</a>
                 </div>
             </div>
         </section>
 
-        <!-- =======================
-        About Section
-        ======================== -->
-        <section id="about" class="reveal">
+        <!-- Work -->
+        <section id="work" class="section section-work" aria-labelledby="work-title">
             <div class="container">
-                <h2>About Me</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <h3>Hello, I'm Kristina.</h3>
-                        <span class="highlight">A designer focused on clarity, impact, and visual storytelling.</span>
-                        <p>
-                            I’m a multidisciplinary designer still exploring and finding my style. I like experimenting with different ideas and getting a little better with every project.
-                        </p>
-                        <p>
-                            I care about the small details and creating things that feel right.
-                        </p>
-                        <div class="about-tags">
-                            <span class="tag">Visual Strategy</span>
-                            <span class="tag">Digital Illustration</span>
-                            <span class="tag">Brand Identity</span>
-                            <span class="tag">Art Direction</span>
-                            <span class="tag">Problem Solving</span>
-                        </div>
-                    </div>
-                    <div class="about-image">
-                        <img src="images/about/kristina-portrait-800.webp" alt="Kristina Petrova" width="600" height="800" loading="lazy" decoding="async">
-                    </div>
+                <div class="section-head">
+                    <h2 id="work-title">Selected Work</h2>
+                    <div class="filters" role="group" aria-label="Filter projects"></div>
                 </div>
-            </div>
-        </section>
-
-        <!-- =======================
-        Skills Section
-        ======================== -->
-        <section id="skills" class="reveal">
-            <div class="container">
-                <h2>Capabilities</h2>
-                <div class="skills-grid">
-                    <div class="skill-card reveal">
-                        <div class="skill-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                        </div>
-                        <h3>Digital Illustration</h3>
-                        <p>Custom digital artwork, character design, and visual assets tailored to your brand's unique voice.</p>
-                    </div>
-                    <div class="skill-card reveal">
-                        <div class="skill-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"></path></svg>
-                        </div>
-                        <h3>Brand Identity</h3>
-                        <p>Strategic logo design and comprehensive visual identity systems that communicate value and build trust.</p>
-                    </div>
-                    <div class="skill-card reveal">
-                        <div class="skill-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        </div>
-                        <h3>Visual Design</h3>
-                        <p>Advanced image manipulation, layout composition, and creative direction for marketing materials.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- =======================
-        Portfolio Section
-        ======================== -->
-        <section id="portfolio" class="reveal">
-            <div class="container">
-                <h2>Selected Work</h2>
-                
-                <!-- Category Filter Buttons -->
-                <div class="portfolio-filters" role="group" aria-label="Filter projects"></div>
 
                 <!-- Filled from js/projects.js -->
-                <div class="portfolio-grid"></div>
+                <div class="work-grid"></div>
                 <noscript><p class="noscript-note">The project gallery needs JavaScript. You can also see my work on <a href="https://www.instagram.com/krisi.petrowa/">Instagram</a>.</p></noscript>
             </div>
         </section>
 
-        <!-- =======================
-        Process Section
-        ======================== -->
-        <section id="process" class="reveal">
-            <div class="container">
-                <h2>My Process</h2>
-                <div class="process-steps">
-                    <div class="process-step reveal">
-                        <div class="step-number">01</div>
-                        <h3>Discover</h3>
-                        <p>Analyzing the market landscape and defining the core problem to solve.</p>
-                    </div>
-                    <div class="process-step reveal">
-                        <div class="step-number">02</div>
-                        <h3>Concept</h3>
-                        <p>Translating strategy into viable visual directions and initial sketches.</p>
-                    </div>
-                    <div class="process-step reveal">
-                        <div class="step-number">03</div>
-                        <h3>Design</h3>
-                        <p>Executing high-fidelity visuals with a focus on aesthetics and function.</p>
-                    </div>
-                    <div class="process-step reveal">
-                        <div class="step-number">04</div>
-                        <h3>Refine</h3>
-                        <p>Iterating based on feedback to polish every detail to perfection.</p>
-                    </div>
-                    <div class="process-step reveal">
-                        <div class="step-number">05</div>
-                        <h3>Deliver</h3>
-                        <p>Providing optimized, production-ready assets for all use cases.</p>
-                    </div>
+        <!-- About -->
+        <section id="about" class="section section-about" aria-labelledby="about-title">
+            <div class="container about-grid">
+                <figure class="about-photo">
+                    <img src="images/about/kristina-portrait-800.webp"
+                         srcset="images/about/kristina-portrait-800.webp 600w, images/about/kristina-portrait-1600.webp 960w"
+                         sizes="(min-width: 900px) 360px, 80vw"
+                         alt="Kristina Petrova" width="600" height="800" loading="lazy" decoding="async">
+                </figure>
+                <div class="about-text">
+                    <p class="eyebrow">About Me</p>
+                    <h2 id="about-title">Hello, I'm Kristina.</h2>
+                    <p class="about-lead">A designer focused on clarity, impact, and visual storytelling.</p>
+                    <p>
+                        I’m a multidisciplinary designer still exploring and finding my style. I like experimenting with different ideas and getting a little better with every project.
+                    </p>
+                    <p>
+                        I care about the small details and creating things that feel right.
+                    </p>
+
+                    <h3 class="subhead">Capabilities</h3>
+                    <dl class="capabilities">
+                        <div>
+                            <dt>Digital Illustration</dt>
+                            <dd>Custom digital artwork, character design, and visual assets tailored to your brand's unique voice.</dd>
+                        </div>
+                        <div>
+                            <dt>Brand Identity</dt>
+                            <dd>Strategic logo design and comprehensive visual identity systems that communicate value and build trust.</dd>
+                        </div>
+                        <div>
+                            <dt>Visual Design</dt>
+                            <dd>Advanced image manipulation, layout composition, and creative direction for marketing materials.</dd>
+                        </div>
+                    </dl>
+
+                    <ul class="tags" aria-label="Skills">
+                        <li>Visual Strategy</li>
+                        <li>Digital Illustration</li>
+                        <li>Brand Identity</li>
+                        <li>Art Direction</li>
+                        <li>Problem Solving</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- =======================
-        Contact Section
-        ======================== -->
-        <section id="contact" class="reveal">
+        <!-- Process -->
+        <section id="process" class="section section-process" aria-labelledby="process-title">
             <div class="container">
-                <h2>Get In Touch</h2>
-                <div class="contact-content">
-                    <div class="contact-info">
-                        <h3>Ready to start your project?</h3>
-                        <p>
-                            I am currently accepting new freelance projects. If you are looking for a dedicated partner to elevate your brand visually, let's connect.
-                        </p>
-                        <div class="social-links">
-                            <!-- Instagram -->
-                            <a href="https://www.instagram.com/krisi.petrowa/" target="_blank" aria-label="Instagram">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.225-.148-4.771-1.664-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.584.07-4.849.148-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.058 1.281-.072 1.689-.072 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.28.072-1.688.072-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.28-.058-1.688-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.44-.645 1.44-1.44s-.645-1.44-1.44-1.44z"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                    <form id="contact-form" action="https://formspree.io/f/mgvgywpe" method="POST" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your full name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                        <p id="my-form-status" class="form-status" role="status" aria-live="polite"></p>
-                    </form>
+                <div class="section-head">
+                    <h2 id="process-title">My Process</h2>
                 </div>
+                <ol class="process">
+                    <li>
+                        <h3>Discover</h3>
+                        <p>Analyzing the market landscape and defining the core problem to solve.</p>
+                    </li>
+                    <li>
+                        <h3>Concept</h3>
+                        <p>Translating strategy into viable visual directions and initial sketches.</p>
+                    </li>
+                    <li>
+                        <h3>Design</h3>
+                        <p>Executing high-fidelity visuals with a focus on aesthetics and function.</p>
+                    </li>
+                    <li>
+                        <h3>Refine</h3>
+                        <p>Iterating based on feedback to polish every detail to perfection.</p>
+                    </li>
+                    <li>
+                        <h3>Deliver</h3>
+                        <p>Providing optimized, production-ready assets for all use cases.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section section-contact" aria-labelledby="contact-title">
+            <div class="container contact-grid">
+                <div class="contact-info">
+                    <p class="eyebrow">Get In Touch</p>
+                    <h2 id="contact-title">Ready to start your project?</h2>
+                    <p>
+                        I am currently accepting new freelance projects. If you are looking for a dedicated partner to elevate your brand visually, let's connect.
+                    </p>
+                    <ul class="contact-links">
+                        <li>
+                            <a href="https://www.instagram.com/krisi.petrowa/" target="_blank" rel="noopener">
+                                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.225-.148-4.771-1.664-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.584.07-4.849.148-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.058 1.281-.072 1.689-.072 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.28.072-1.688.072-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.28-.058-1.688-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.44-.645 1.44-1.44s-.645-1.44-1.44-1.44z"/></svg>
+                                <span>Instagram</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <form id="contact-form" action="https://formspree.io/f/mgvgywpe" method="POST" class="contact-form">
+                    <div class="field">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your full name">
+                    </div>
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required autocomplete="email" placeholder="your.email@example.com">
+                    </div>
+                    <div class="field">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+                </form>
             </div>
         </section>
 
     </main>
 
-    <!-- =======================
-    Footer
-    ======================== -->
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 Kristina Petrova. All Rights Reserved.</p>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>&copy; <span id="year">2026</span> Kristina Petrova. All Rights Reserved.</p>
+            <a href="#top">Back to top ↑</a>
         </div>
     </footer>
 
-    <!-- =======================
-    Lightbox Modal
-    ======================== -->
-    <dialog id="portfolio-modal" class="modal" aria-labelledby="modal-title">
-        <button type="button" class="close-modal" aria-label="Close">&times;</button>
-        <div class="modal-dialog">
-            <div class="modal-image-wrapper">
-                <img class="modal-img" id="modal-img" src="data:," alt="">
+    <!-- Project viewer (filled by js/main.js) -->
+    <dialog id="viewer" class="viewer" aria-labelledby="viewer-title">
+        <div class="viewer-bar">
+            <span class="viewer-count" id="viewer-count"></span>
+            <div class="viewer-controls">
+                <button type="button" class="viewer-btn" id="viewer-prev" aria-label="Previous project">←</button>
+                <button type="button" class="viewer-btn" id="viewer-next" aria-label="Next project">→</button>
+                <button type="button" class="viewer-btn" id="viewer-close" aria-label="Close" autofocus>✕</button>
             </div>
-            <div class="modal-info-wrapper">
-                <span id="modal-category" class="modal-category-label"></span>
-                <h3 id="modal-title" class="modal-title">Project</h3>
-                <p id="modal-description" class="modal-description"></p>
-                <div id="modal-gallery" class="modal-gallery"></div>
+        </div>
+        <div class="viewer-body">
+            <div class="viewer-stage">
+                <img class="viewer-img" id="viewer-img" src="data:," alt="">
+            </div>
+            <div class="viewer-info">
+                <p class="viewer-label" id="viewer-label"></p>
+                <h2 class="viewer-title" id="viewer-title">Project</h2>
+                <p class="viewer-desc" id="viewer-desc"></p>
+                <dl class="viewer-facts" id="viewer-facts"></dl>
+                <div class="viewer-concepts" id="viewer-concepts" role="group" aria-label="Design directions"></div>
+                <div class="viewer-thumbs" id="viewer-thumbs"></div>
             </div>
         </div>
     </dialog>
-    
+
 </body>
 </html>

@@ -1,145 +1,214 @@
-/* Portfolio behaviour. Project content lives in js/projects.js. */
-document.documentElement.classList.replace('no-js', 'js');
-
+/* Portfolio behaviour. Project content lives in js/projects.js — not here. */
 document.addEventListener('DOMContentLoaded', () => {
-    const body = document.body;
-    const visibleProjects = (typeof PROJECTS !== 'undefined' ? PROJECTS : []).filter(p => !p.hidden);
+    const projects = (typeof PROJECTS !== 'undefined' ? PROJECTS : []).filter(p => !p.hidden);
+    const filters = typeof FILTERS !== 'undefined' ? FILTERS : [];
 
     /* ---------- helpers ---------- */
     const el = (tag, props = {}, children = []) => {
         const node = document.createElement(tag);
-        for (const [k, v] of Object.entries(props)) {
-            if (v === undefined || v === null || v === false) continue;
-            if (k === 'class') node.className = v;
-            else if (k === 'text') node.textContent = v;
-            else if (k === 'style') Object.assign(node.style, v);
-            else if (k.startsWith('data-')) node.setAttribute(k, v);
-            else if (k in node) node[k] = v;
-            else node.setAttribute(k, v);
+        for (const [key, value] of Object.entries(props)) {
+            if (value === undefined || value === null || value === false) continue;
+            if (key === 'class') node.className = value;
+            else if (key === 'text') node.textContent = value;
+            else node.setAttribute(key, value);
         }
-        children.forEach(c => c && node.appendChild(c));
+        node.append(...children.filter(Boolean));
         return node;
     };
     const small = base => `${base}-800.webp`;
     const large = base => `${base}-1600.webp`;
+    const imagesOf = p => {
+        if (p.concepts && p.concepts.length) return p.concepts[0].images;
+        if (p.images && p.images.length) return p.images;
+        return [p.cover];
+    };
 
-    // Warn (instead of breaking the page) when a project is missing something
-    const REQUIRED = ['slug', 'title', 'filter', 'label', 'cover', 'alt'];
-    visibleProjects.forEach((p, i) => {
+    // A typo in projects.js should never blank the page: warn and carry on.
+    const REQUIRED = ['slug', 'title', 'filter', 'label', 'cover', 'alt', 'width', 'height'];
+    projects.forEach((p, i) => {
         const missing = REQUIRED.filter(k => !p[k]);
-        if (missing.length) console.warn(`projects.js: project #${i + 1} (${p.title || p.slug || '?'}) is missing: ${missing.join(', ')}`);
+        if (missing.length) console.warn(`projects.js: "${p.title || p.slug || '#' + (i + 1)}" is missing: ${missing.join(', ')}`);
     });
 
-    /* ---------- 0. Render filters + grid from data ---------- */
-    const grid = document.querySelector('.portfolio-grid');
-    const filterBar = document.querySelector('.portfolio-filters');
+    /* ---------- header border on scroll ---------- */
+    const header = document.getElementById('site-header');
+    const onScroll = () => header && header.classList.toggle('scrolled', scrollY > 8);
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-    if (filterBar && typeof FILTERS !== 'undefined') {
-        filterBar.replaceChildren(
-            el('button', { type: 'button', class: 'filter-btn active', 'data-filter': 'all', 'aria-pressed': 'true', text: 'All' }),
-            ...FILTERS
-                .filter(f => visibleProjects.some(p => p.filter === f.key))
-                .map(f => el('button', { type: 'button', class: 'filter-btn', 'data-filter': f.key, 'aria-pressed': 'false', text: f.label }))
-        );
-    }
+    /* ---------- footer year ---------- */
+    const year = document.getElementById('year');
+    if (year) year.textContent = new Date().getFullYear();
+
+    /* ---------- work grid ---------- */
+    const grid = document.querySelector('.work-grid');
+    const filterBar = document.querySelector('.filters');
 
     if (grid) {
-        grid.replaceChildren(...visibleProjects.map((p, index) => {
+        grid.append(...projects.map((p, index) => {
             const img = el('img', {
                 src: small(p.cover),
                 srcset: `${small(p.cover)} 800w, ${large(p.cover)} 1600w`,
-                sizes: '(min-width: 1024px) 33vw, 100vw',
+                sizes: '(min-width: 1024px) 400px, (min-width: 600px) 50vw, 100vw',
                 alt: p.alt || '',
-                width: p.width, height: p.height,
-                loading: 'lazy', decoding: 'async'
+                width: p.width,
+                height: p.height,
+                loading: index < 3 ? 'eager' : 'lazy',
+                decoding: 'async'
             });
             if (p.focus) img.style.objectPosition = p.focus;
-            if (p.fit === 'contain') img.style.objectFit = 'contain';
+
+            const media = el('div', { class: 'card-media' + (p.fit === 'contain' ? ' fit-contain' : '') }, [img]);
+            if (p.background) {
+                media.style.background = p.background;
+                if (/^#f{3,6}$/i.test(p.background)) media.classList.add('on-white');
+            }
+
             const featured = p.featured === 'large' ? ' featured-large' : p.featured === 'wide' ? ' featured-wide' : '';
-            return el('div', {
-                class: `portfolio-item reveal${featured}`,
-                'data-category': p.filter,
-                'data-index': String(index),
-                'data-count': String(projectImages(p).length)
-            }, [
-                el('div', { class: 'portfolio-image', style: p.background ? { background: p.background } : {} }, [img]),
-                el('div', { class: 'portfolio-overlay' }, [
-                    el('span', { class: 'portfolio-category', text: p.label }),
-                    el('h3', { class: 'portfolio-title' }, [
-                        el('button', { type: 'button', class: 'portfolio-open', 'aria-haspopup': 'dialog', text: p.title })
+            return el('article', { class: 'card' + featured, 'data-filter': p.filter, 'data-index': index, 'data-count': imagesOf(p).length }, [
+                media,
+                el('div', { class: 'card-caption' }, [
+                    el('span', { class: 'card-label', text: p.label }),
+                    el('h3', { class: 'card-title' }, [
+                        el('button', { type: 'button', class: 'card-open', 'aria-haspopup': 'dialog', text: p.title })
                     ])
                 ])
             ]);
         }));
     }
 
-    function projectImages(p) {
-        if (p.concepts && p.concepts.length) return p.concepts.flatMap(c => c.images);
-        return p.images && p.images.length ? p.images : [];
+    if (filterBar) {
+        const used = filters.filter(f => projects.some(p => p.filter === f.key));
+        if (used.length > 1) {
+            filterBar.append(
+                el('button', { type: 'button', class: 'filter-btn', 'data-filter': 'all', 'aria-pressed': 'true', text: 'All' }),
+                ...used.map(f => el('button', { type: 'button', class: 'filter-btn', 'data-filter': f.key, 'aria-pressed': 'false', text: f.label }))
+            );
+        }
+        filterBar.addEventListener('click', e => {
+            const btn = e.target.closest('.filter-btn');
+            if (!btn) return;
+            filterBar.querySelectorAll('.filter-btn').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+            const value = btn.dataset.filter;
+            grid.querySelectorAll('.card').forEach(card => {
+                card.hidden = value !== 'all' && card.dataset.filter !== value;
+            });
+        });
     }
 
-    /* ---------- 2. Typewriter ---------- */
-    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const textElement = document.getElementById('typewriter-text');
-    if (textElement && !reduceMotion) {
-        const phrases = ['Digital Designer', 'Illustrator', 'Visual Storyteller'];
-        let phraseIndex = 0, charIndex = 0, isDeleting = false;
-        const type = () => {
-            const current = phrases[phraseIndex];
-            charIndex += isDeleting ? -1 : 1;
-            textElement.textContent = current.substring(0, charIndex);
-            let delay = isDeleting ? 50 : 100;
-            if (!isDeleting && charIndex === current.length) { isDeleting = true; delay = 2000; }
-            else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; delay = 500; }
-            setTimeout(type, delay);
-        };
-        setTimeout(type, 1000);
-    }
+    /* ---------- project viewer ---------- */
+    const viewer = document.getElementById('viewer');
+    if (!viewer || !grid) return;
 
-    /* ---------- 3+4. Scroll progress + header ---------- */
-    const progress = document.getElementById('progress-bar');
-    const header = document.getElementById('main-header');
-    const onScroll = () => {
-        const max = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        if (progress) progress.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
-        if (header) header.classList.toggle('scrolled', scrollY > 50);
+    const $ = id => document.getElementById(id);
+    const vImg = $('viewer-img'), vTitle = $('viewer-title'), vLabel = $('viewer-label'),
+          vDesc = $('viewer-desc'), vFacts = $('viewer-facts'), vConcepts = $('viewer-concepts'),
+          vThumbs = $('viewer-thumbs'), vCount = $('viewer-count');
+    let current = -1;
+    let lastTrigger = null;
+
+    const visibleIndexes = () => [...grid.querySelectorAll('.card:not([hidden])')].map(c => Number(c.dataset.index));
+
+    const showImage = (base, alt) => {
+        vImg.classList.add('is-loading');
+        vImg.onload = () => vImg.classList.remove('is-loading');
+        vImg.src = large(base);
+        vImg.alt = alt || '';
     };
-    addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
 
-    /* ---------- 5. Mobile menu ---------- */
-    const menuToggle = document.getElementById('menu-toggle');
-    const navLinks = document.getElementById('nav-links');
-    if (menuToggle && navLinks) {
-        const setMenu = open => {
-            navLinks.classList.toggle('active', open);
-            menuToggle.classList.toggle('active', open);
-            body.classList.toggle('nav-open', open);
-            menuToggle.setAttribute('aria-expanded', String(open));
-            menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-        };
-        menuToggle.addEventListener('click', () => setMenu(!navLinks.classList.contains('active')));
-        navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-        document.addEventListener('click', e => {
-            if (body.classList.contains('nav-open') && !e.target.closest('#nav-links, #menu-toggle')) setMenu(false);
+    const renderThumbs = (images, alt) => {
+        if (images.length < 2) { vThumbs.replaceChildren(); return; }
+        const buttons = images.map((base, i) => {
+            const b = el('button', { type: 'button', class: 'thumb', 'aria-label': `Image ${i + 1} of ${images.length}`, 'aria-current': String(i === 0) },
+                [el('img', { src: small(base), alt: '', loading: 'lazy', decoding: 'async' })]);
+            b.addEventListener('click', () => {
+                showImage(base, alt);
+                buttons.forEach(x => x.setAttribute('aria-current', String(x === b)));
+            });
+            return b;
         });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape' && body.classList.contains('nav-open')) setMenu(false); });
-    }
+        vThumbs.replaceChildren(...buttons);
+    };
 
-    /* ---------- 6. Scroll reveal ---------- */
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(node => revealObserver.observe(node));
+    const render = index => {
+        const p = projects[index];
+        current = index;
+        const order = visibleIndexes();
+        vCount.textContent = `${order.indexOf(index) + 1} / ${order.length}`;
+        vLabel.textContent = p.label || '';
+        vTitle.textContent = p.title;
+        vDesc.textContent = p.description || '';
 
-    /* ---------- 7. Contact form (Formspree) ---------- */
+        const facts = [['Year', p.year], ['Type', p.type], ['Role', p.role], ['Tools', Array.isArray(p.tools) ? p.tools.join(', ') : p.tools]]
+            .filter(([, v]) => v);
+        vFacts.replaceChildren(...facts.flatMap(([k, v]) => [el('dt', { text: k }), el('dd', { text: String(v) })]));
+
+        vConcepts.replaceChildren();
+        if (p.concepts && p.concepts.length > 1) {
+            const buttons = p.concepts.map((c, i) => el('button', { type: 'button', class: 'concept-btn', 'aria-pressed': String(i === 0), text: c.label || `Concept ${i + 1}` }));
+            buttons.forEach((b, i) => b.addEventListener('click', () => {
+                buttons.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+                showImage(p.concepts[i].images[0], p.alt);
+                renderThumbs(p.concepts[i].images, p.alt);
+            }));
+            vConcepts.append(...buttons);
+        }
+
+        const images = imagesOf(p);
+        showImage(images[0], p.alt);
+        renderThumbs(images, p.alt);
+        viewer.scrollTop = 0;
+    };
+
+    const step = dir => {
+        const order = visibleIndexes();
+        const pos = order.indexOf(current);
+        render(order[(pos + dir + order.length) % order.length]);
+    };
+
+    const open = index => {
+        lastTrigger = grid.querySelector(`.card[data-index="${index}"] .card-open`);
+        render(index);
+        viewer.showModal();
+    };
+
+    grid.addEventListener('click', e => {
+        const card = e.target.closest('.card');
+        if (card) open(Number(card.dataset.index));
+    });
+
+    $('viewer-close').addEventListener('click', () => viewer.close());
+    $('viewer-prev').addEventListener('click', () => step(-1));
+    $('viewer-next').addEventListener('click', () => step(1));
+
+    viewer.addEventListener('keydown', e => {
+        if (e.target.closest('input, textarea')) return;
+        if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    });
+
+    // Click on the empty dark area closes the viewer
+    viewer.addEventListener('click', e => {
+        if (e.target === viewer || e.target.classList.contains('viewer-body') || e.target.classList.contains('viewer-stage')) viewer.close();
+    });
+
+    // Swipe left/right on the image to change project (phones)
+    let touchX = null, touchY = null;
+    vImg.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; }, { passive: true });
+    vImg.addEventListener('touchend', e => {
+        if (touchX === null) return;
+        const dx = e.changedTouches[0].clientX - touchX;
+        const dy = e.changedTouches[0].clientY - touchY;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+        touchX = touchY = null;
+    });
+
+    // Return focus to the card that opened the viewer
+    viewer.addEventListener('close', () => { if (lastTrigger) lastTrigger.focus({ preventScroll: true }); });
+
+    /* ---------- contact form (Formspree) ---------- */
     const form = document.getElementById('contact-form');
-    const status = document.getElementById('my-form-status');
+    const status = document.getElementById('form-status');
     if (form && status) {
         form.addEventListener('submit', async event => {
             event.preventDefault();
@@ -165,109 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     status.classList.add('is-error');
                 }
             } catch {
-                status.textContent = 'Oops! There was a problem sending your message.';
+                status.textContent = 'Oops! There was a problem sending your message. Please try again or reach me on Instagram.';
                 status.classList.add('is-error');
             } finally {
                 button.disabled = false;
             }
         });
-    }
-
-    /* ---------- 8. Filters ---------- */
-    if (filterBar) {
-        filterBar.addEventListener('click', e => {
-            const btn = e.target.closest('.filter-btn');
-            if (!btn) return;
-            filterBar.querySelectorAll('.filter-btn').forEach(b => {
-                b.classList.toggle('active', b === btn);
-                b.setAttribute('aria-pressed', String(b === btn));
-            });
-            const value = btn.dataset.filter;
-            document.querySelectorAll('.portfolio-item').forEach(item => {
-                item.classList.toggle('hidden', value !== 'all' && item.dataset.category !== value);
-            });
-        });
-    }
-
-    /* ---------- 9. Project viewer (modal) ---------- */
-    const modal = document.getElementById('portfolio-modal');
-    const modalImg = document.getElementById('modal-img');
-    const modalTitle = document.getElementById('modal-title');
-    const modalCat = document.getElementById('modal-category');
-    const modalDesc = document.getElementById('modal-description');
-    const modalGallery = document.getElementById('modal-gallery');
-    const closeBtn = modal && modal.querySelector('.close-modal');
-
-    const showImage = (base, alt) => {
-        modalImg.classList.remove('fade-in');
-        void modalImg.offsetWidth;
-        modalImg.src = large(base);
-        modalImg.alt = alt || '';
-        modalImg.classList.add('fade-in');
-    };
-
-    const thumbs = (images, container, alt) => {
-        const buttons = images.map((base, i) => {
-            const b = el('button', { type: 'button', class: 'thumb', 'aria-label': `Show image ${i + 1} of ${images.length}`, 'aria-current': i === 0 ? 'true' : 'false' },
-                [el('img', { src: small(base), alt: '', loading: 'lazy', decoding: 'async' })]);
-            b.addEventListener('click', () => {
-                showImage(base, alt);
-                buttons.forEach(x => x.setAttribute('aria-current', String(x === b)));
-            });
-            return b;
-        });
-        container.replaceChildren(...buttons);
-    };
-
-    const openProject = p => {
-        modalTitle.textContent = p.title;
-        modalCat.textContent = p.label;
-        modalDesc.textContent = p.description || '';
-        modalGallery.replaceChildren();
-
-        if (p.concepts && p.concepts.length > 1) {
-            const tabs = el('div', { class: 'modal-tabs' });
-            const label = el('span', { class: 'concept-label' });
-            const thumbBox = el('div', { class: 'modal-gallery', style: { marginTop: '0' } });
-            const buttons = p.concepts.map((c, i) => el('button', { type: 'button', class: 'tab-btn', 'aria-pressed': 'false', text: c.label || `Concept ${i + 1}` }));
-            const render = i => {
-                buttons.forEach((b, j) => {
-                    b.classList.toggle('active', i === j);
-                    b.setAttribute('aria-pressed', String(i === j));
-                });
-                label.textContent = p.concepts[i].label || '';
-                showImage(p.concepts[i].images[0], p.alt);
-                thumbs(p.concepts[i].images, thumbBox, p.alt);
-            };
-            buttons.forEach((b, i) => b.addEventListener('click', () => render(i)));
-            tabs.append(...buttons);
-            modalGallery.append(tabs, label, thumbBox);
-            render(0);
-        } else {
-            const images = projectImages(p);
-            showImage(images[0] || p.cover, p.alt);
-            if (images.length > 1) thumbs(images, modalGallery, p.alt);
-        }
-        lastTrigger = document.activeElement;
-        modal.showModal();
-        modal.scrollTop = 0;
-    };
-
-    let lastTrigger = null;
-    const closeModal = () => modal.close();
-
-    if (grid && modal) {
-        grid.addEventListener('click', e => {
-            const item = e.target.closest('.portfolio-item');
-            if (!item) return;
-            const btn = item.querySelector('.portfolio-open');
-            if (btn && e.target !== btn) btn.focus({ preventScroll: true });
-            openProject(visibleProjects[Number(item.dataset.index)]);
-        });
-        closeBtn && closeBtn.addEventListener('click', closeModal);
-        // Click on the dark area (not the image/text) closes the viewer
-        modal.addEventListener('click', e => { if (e.target === modal || e.target.classList.contains('modal-dialog')) closeModal(); });
-        // <dialog> closes itself on Esc; put focus back on the card that opened it
-        modal.addEventListener('close', () => { if (lastTrigger && lastTrigger.focus) lastTrigger.focus({ preventScroll: true }); });
     }
 });
