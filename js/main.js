@@ -51,7 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* ---------- 2. Header & nav ---------- */
+    /* ---------- 2. Ruler, header & nav ---------- */
+
+    const ruler = $('ruler');
+    if (ruler) {
+        const cm = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--cm')) || 38;
+        const marks = Math.ceil(Math.max(window.innerWidth, 1920) / cm) + 1;
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < marks; i++) {
+            const n = el('span', { text: String(i) });
+            n.style.left = `${i * cm}px`;
+            frag.append(n);
+        }
+        ruler.append(frag);
+    }
 
     const header = $('site-header');
     const onScroll = () => header && header.classList.toggle('scrolled', window.scrollY > 8);
@@ -85,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ---------- 3. Work grid & filters ---------- */
 
-    const grid = document.querySelector('.work-grid');
+    const grid = document.getElementById('sheet');
     const filterBar = document.querySelector('.filters');
     const filterStatus = $('filter-status');
 
@@ -96,47 +109,35 @@ document.addEventListener('DOMContentLoaded', () => {
         img.addEventListener('load', done, { once: true });
         img.addEventListener('error', () => {
             done();
-            img.closest('.card-media')?.classList.add('is-broken');
-            img.style.visibility = 'hidden';
+            img.closest('.sticker')?.classList.add('is-broken');
             console.warn(`Image not found: ${img.currentSrc || img.src}. Check the file name and folder in images/projects/.`);
         }, { once: true });
     };
 
+    // A stable "random" tilt per sticker, between -4 and +4 degrees
+    const tilt = i => ((i * 37) % 9) - 4;
+
     if (grid) {
         grid.append(...projects.map((p, index) => {
-            const isLarge = p.featured === 'large';
             const img = el('img', {
                 src: small(p.cover),
                 srcset: `${small(p.cover)} 800w, ${large(p.cover)} 1600w`,
-                // how wide the tile is at each screen size, so the browser picks the right file
-                sizes: isLarge
-                    ? '(min-width: 1024px) 50vw, (min-width: 600px) 50vw, 100vw'
-                    : '(min-width: 1024px) 25vw, (min-width: 600px) 50vw, 100vw',
+                // how wide a sticker is at each screen size, so the browser picks the right file
+                sizes: '(min-width: 1100px) 300px, (min-width: 600px) 45vw, 92vw',
                 alt: p.alt || '',
                 width: p.width,
                 height: p.height,
-                loading: index < 3 ? 'eager' : 'lazy',
-                fetchpriority: index === 0 ? 'high' : undefined,
+                loading: index < 4 ? 'eager' : 'lazy',
                 decoding: 'async'
             });
-            if (p.focus) img.style.objectPosition = p.focus;
             markLoaded(img);
 
             const count = imageCount(p);
-            const media = el('div', { class: 'card-media' + (p.fit === 'contain' ? ' fit-contain' : '') }, [
-                img,
-                count > 1 ? el('span', { class: 'card-count', 'aria-hidden': 'true', text: `${count} images` }) : null
-            ]);
-            if (p.background) {
-                media.style.background = p.background;
-                if (/^#f{3}(f{3})?$/i.test(p.background)) media.classList.add('on-white');
-            }
-
-            const featured = isLarge ? ' featured-large' : p.featured === 'wide' ? ' featured-wide' : '';
-            return el('article', { class: 'card' + featured, 'data-filter': p.filter, 'data-index': index }, [
-                media,
-                el('div', { class: 'card-caption' }, [
-                    el('span', { class: 'card-label', text: p.label }),
+            const card = el('article', { class: 'card', 'data-filter': p.filter, 'data-index': index }, [
+                count > 1 ? el('span', { class: 'card-count', 'aria-hidden': 'true', text: `+${count - 1}` }) : null,
+                el('div', { class: 'sticker' }, [img]),
+                el('div', { class: 'card-label' }, [
+                    el('span', { class: 'card-kind', text: p.label }),
                     el('h3', { class: 'card-title' }, [
                         el('button', {
                             type: 'button',
@@ -148,7 +149,98 @@ document.addEventListener('DOMContentLoaded', () => {
                     ])
                 ])
             ]);
+            card.style.setProperty('--r', `${tilt(index)}deg`);
+            return card;
         }));
+
+        // Stickers drop onto the sheet as they scroll into view (skipped with reduced motion)
+        if (!reduceMotion && 'IntersectionObserver' in window) {
+            const drop = new IntersectionObserver(entries => entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                e.target.animate(
+                    [{ opacity: 0, transform: 'translateY(36px) rotate(-3deg)' }, { opacity: 1, transform: 'none' }],
+                    { duration: 650, easing: 'cubic-bezier(.2,.9,.3,1.2)' }
+                );
+                drop.unobserve(e.target);
+            }), { threshold: 0.12 });
+            grid.querySelectorAll('.card').forEach(c => drop.observe(c));
+        }
+    }
+
+    let openProject = null; // set once the viewer is ready
+
+    /* ---------- Hero stickers you can drag around ---------- */
+    const heroBox = $('hero-stickers');
+    const heroList = (typeof HERO_STICKERS !== 'undefined' ? HERO_STICKERS : [])
+        .map(h => ({ ...h, index: projects.findIndex(p => p.slug === h.slug) }))
+        .filter(h => h.index >= 0);
+    if (heroBox && heroList.length) {
+        const phone = window.matchMedia('(max-width: 639px)').matches;
+        // On phones the stickers gather in a cluster above the name
+        const phoneSpots = [{ x: 0, y: 4 }, { x: 35, y: 0 }, { x: 2, y: 52 }, { x: 68, y: 50 }, { x: 70, y: 0 }, { x: 36, y: 54 }];
+        // Touch screens: stickers are tap-to-open only, so swiping over them still scrolls the page
+        const canDrag = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        let z = 10;
+        heroList.forEach((h, i) => {
+            const p = projects[h.index];
+            const base = p.cutout || p.cover;
+            const sticker = el('div', { class: 'sticker loose' + (p.cutout ? ' cutout' : '') + (canDrag ? '' : ' tap-only') }, [
+                el('img', { src: small(base), alt: '', width: p.cutout ? undefined : p.width, height: p.cutout ? undefined : p.height, draggable: 'false', decoding: 'async' })
+            ]);
+            const spot = phone ? (phoneSpots[i] || phoneSpots[i % phoneSpots.length]) : h;
+            sticker.style.left = `${spot.x}%`;
+            sticker.style.top = `${spot.y}%`;
+            sticker.style.setProperty('--w', `${h.w || 180}px`);
+            sticker.style.setProperty('--r', `${h.r || 0}deg`);
+            heroBox.append(sticker);
+            // keep every sticker fully inside the hero, whatever the screen width
+            const maxLeft = heroBox.clientWidth - sticker.offsetWidth - 4;
+            if (sticker.offsetLeft > maxLeft) sticker.style.left = `${Math.max(0, maxLeft)}px`;
+
+            if (!reduceMotion) {
+                sticker.animate(
+                    [{ opacity: 0, transform: `translateY(-30px) rotate(${(h.r || 0) * 2}deg)` }, { opacity: 1, transform: `rotate(${h.r || 0}deg)` }],
+                    { duration: 700, delay: 200 + i * 110, easing: 'cubic-bezier(.2,.9,.3,1.3)', fill: 'backwards' }
+                );
+            }
+
+            if (!canDrag) {
+                sticker.addEventListener('click', () => openProject && openProject(h.index));
+                return;
+            }
+
+            // Drag with the mouse; a click without moving opens the project
+            let start = null;
+            sticker.addEventListener('pointerdown', e => {
+                if (e.button !== 0) return;
+                const box = heroBox.getBoundingClientRect();
+                const r = sticker.getBoundingClientRect();
+                start = { x: e.clientX, y: e.clientY, left: r.left - box.left, top: r.top - box.top, moved: false };
+                sticker.setPointerCapture(e.pointerId);
+                sticker.classList.add('dragging');
+                sticker.style.zIndex = String(++z);
+            });
+            sticker.addEventListener('pointermove', e => {
+                if (!start) return;
+                const dx = e.clientX - start.x, dy = e.clientY - start.y;
+                if (Math.abs(dx) + Math.abs(dy) > 6) start.moved = true;
+                sticker.style.left = `${start.left + dx}px`;
+                sticker.style.top = `${start.top + dy}px`;
+                sticker.style.transform = `rotate(${(h.r || 0) + dx / 40}deg) scale(1.06)`;
+            });
+            const release = () => {
+                if (!start) return;
+                const wasTap = !start.moved;
+                start = null;
+                sticker.classList.remove('dragging');
+                sticker.style.transform = '';
+                if (wasTap && openProject) openProject(h.index);
+            };
+            sticker.addEventListener('pointerup', release);
+            sticker.addEventListener('pointercancel', () => { start = null; sticker.classList.remove('dragging'); sticker.style.transform = ''; });
+        });
+        const hint = $('drag-hint');
+        if (hint && canDrag) hint.hidden = false;
     }
 
     if (filterBar && grid) {
@@ -195,7 +287,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const vImg = $('viewer-img'), vTitle = $('viewer-title'), vLabel = $('viewer-label'),
               vDesc = $('viewer-desc'), vFacts = $('viewer-facts'), vConcepts = $('viewer-concepts'),
               vThumbs = $('viewer-thumbs'), vCount = $('viewer-count'), vLive = $('viewer-live'),
-              vToast = $('viewer-toast'), vShare = $('viewer-share');
+              vToast = $('viewer-toast'), vShare = $('viewer-share'), vSwatches = $('viewer-swatches');
+        const HEX = /^#[0-9a-f]{3}([0-9a-f]{3})?$/i;
         const HASH_PREFIX = '#work/';
         let current = -1;
         let openedWithHistory = false; // true when opening added a browser history entry
@@ -247,6 +340,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const pos = Math.max(0, order.indexOf(index));
             vCount.textContent = `${pos + 1} / ${order.length}`;
             vLabel.textContent = p.label || '';
+            // The viewer takes the project's own colours
+            if (p.tone && HEX.test(p.tone)) viewer.style.setProperty('--tone', p.tone);
+            else viewer.style.removeProperty('--tone');
+            // the strip where the scrollbar was gets the same colour
+            document.documentElement.style.backgroundColor = getComputedStyle(viewer).getPropertyValue('--tone').trim() || '';
+            vSwatches.replaceChildren(...(Array.isArray(p.swatches) ? p.swatches : []).filter(c => HEX.test(c)).slice(0, 6).map(c => {
+                const chip = el('i');
+                chip.style.background = c;
+                return el('span', { class: 'swatch' }, [chip, document.createTextNode(c.toUpperCase())]);
+            }));
             vTitle.textContent = p.title;
             vDesc.textContent = p.description || '';
             vDesc.hidden = !p.description;
@@ -286,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const baseTitle = document.title;
 
         const open = (index, { fromHistory = false } = {}) => {
+            if (!projects[index]) return;
             render(index);
             if (!viewer.open) viewer.showModal();
             if (!fromHistory) {
@@ -312,6 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         viewer.addEventListener('close', () => {
             document.title = baseTitle;
+            document.documentElement.style.backgroundColor = '';
             if (history.state && history.state.viewer) {
                 history.replaceState(null, '', `${location.pathname}${location.search}#work`);
             }
@@ -337,6 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = e.target.closest('.card');
             if (card) open(Number(card.dataset.index));
         });
+        openProject = index => open(index);
 
         $('viewer-close').addEventListener('click', requestClose);
         $('viewer-prev').addEventListener('click', () => step(-1));

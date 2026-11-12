@@ -6,7 +6,7 @@
 
     <title>Kristina Petrova — Visual Designer &amp; Illustrator</title>
     <meta name="description" content="Portfolio of Kristina Petrova. Specializing in digital illustration, branding, character design, and visual storytelling.">
-    <meta name="theme-color" content="#faf8f5">
+    <meta name="theme-color" content="#275c48">
     <!-- Security: only load files from this site; the form may only talk to Formspree.
          If you ever embed something from another site (video, analytics, Instagram feed),
          add its address here or it will be blocked. -->
@@ -26,7 +26,7 @@
     <meta property="og:description" content="Check out my latest digital illustrations and brand design work.">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Kristina Petrova, Visual Designer &amp; Illustrator, next to three of her illustrations">
+    <meta property="og:image:alt" content="Kristina Petrova, Visual Designer &amp; Illustrator, on a green cutting mat next to four of her illustrations as stickers">
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -46,8 +46,8 @@
     }
     </script>
 
-    <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/projects.js" defer></script>
@@ -57,9 +57,12 @@
 
     <a class="skip-link" href="#work">Skip to work</a>
 
+    <!-- Ruler along the top edge of the mat (numbers added by js/main.js) -->
+    <div class="ruler" id="ruler" aria-hidden="true"></div>
+
     <header class="site-header" id="site-header">
         <div class="container header-inner">
-            <a href="#top" class="wordmark">Kristina Petrova</a>
+            <a href="#top" class="wordmark"><span class="wordmark-dot" aria-hidden="true"></span>Kristina Petrova</a>
             <nav aria-label="Main">
                 <ul class="nav-links">
                     <li><a href="#work">Work</a></li>
@@ -72,52 +75,55 @@
 
     <main id="top">
 
-        <!-- Intro -->
-        <section class="hero" aria-labelledby="hero-title">
-            <div class="container hero-inner">
-                <div class="hero-title">
-                    <p class="eyebrow">Visual Designer &amp; Illustrator</p>
-                    <h1 id="hero-title">Kristina Petrova</h1>
+        <!-- Intro: name + draggable stickers (stickers come from HERO_STICKERS in js/projects.js) -->
+        <section class="hero container" aria-labelledby="hero-title">
+            <div class="hero-text">
+                <p class="tape">Visual Designer &amp; Illustrator</p>
+                <h1 id="hero-title">Kristina <span class="highlight">Petrova</span></h1>
+                <p class="hero-tagline">
+                    Helping brands stand out through distinct visual identities and immersive digital illustrations.
+                </p>
+                <div class="hero-actions">
+                    <a href="#work" class="btn btn-primary">View Selected Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
                 </div>
-                <div class="hero-side">
-                    <p class="hero-tagline">
-                        Helping brands stand out through distinct visual identities and immersive digital illustrations.
-                    </p>
-                    <div class="hero-actions">
-                        <a href="#work" class="btn btn-primary">View Selected Work</a>
-                        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-                    </div>
-                    <a class="availability" href="#contact"><span class="dot" aria-hidden="true"></span>Available for freelance projects</a>
-                </div>
+                <a class="availability" href="#contact"><span class="dot" aria-hidden="true"></span>Available for freelance projects</a>
+                <p class="drag-hint" id="drag-hint" aria-hidden="true" hidden>
+                    <svg width="28" height="18" viewBox="0 0 28 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 9c6-6 12 6 22 0"/><path d="M20 4l4 5-5 3"/></svg>
+                    psst, the stickers move. Drag them around.
+                </p>
             </div>
+            <div class="hero-stickers" id="hero-stickers" aria-hidden="true"></div>
         </section>
 
-        <!-- Work -->
-        <section id="work" class="section section-work" aria-labelledby="work-title">
-            <div class="container">
-                <div class="section-head">
+        <!-- Work: the sticker sheet -->
+        <section id="work" class="section container" aria-labelledby="work-title">
+            <div class="section-head">
+                <div>
+                    <p class="tape">Sheet 01 · Selected work</p>
                     <h2 id="work-title">Selected Work</h2>
-                    <div class="filters" role="group" aria-label="Filter projects"></div>
                 </div>
-
-                <!-- Filled from js/projects.js -->
-                <p class="visually-hidden" id="filter-status" aria-live="polite"></p>
-                <div class="work-grid"></div>
-                <noscript><p class="noscript-note">The project gallery needs JavaScript. You can also see my work on <a href="https://www.instagram.com/krisi.petrowa/">Instagram</a>.</p></noscript>
+                <div class="filters" role="group" aria-label="Filter projects"></div>
             </div>
+
+            <!-- Filled from js/projects.js -->
+            <p class="visually-hidden" id="filter-status" aria-live="polite"></p>
+            <div class="sheet" id="sheet"></div>
+            <noscript><p class="noscript-note">The project gallery needs JavaScript. You can also see my work on <a href="https://www.instagram.com/krisi.petrowa/">Instagram</a>.</p></noscript>
         </section>
 
         <!-- About -->
-        <section id="about" class="section section-about" aria-labelledby="about-title">
-            <div class="container about-grid">
-                <figure class="about-photo">
+        <section id="about" class="section container" aria-labelledby="about-title">
+            <div class="about-grid">
+                <figure class="polaroid">
                     <img src="images/about/kristina-portrait-800.webp"
                          srcset="images/about/kristina-portrait-800.webp 600w, images/about/kristina-portrait-1600.webp 960w"
-                         sizes="(min-width: 900px) 360px, 80vw"
+                         sizes="(min-width: 860px) 340px, 80vw"
                          alt="Kristina Petrova" width="600" height="800" loading="lazy" decoding="async">
+                    <figcaption>hi, I'm Krisi</figcaption>
                 </figure>
                 <div class="about-text">
-                    <p class="eyebrow">About Me</p>
+                    <p class="tape">About Me</p>
                     <h2 id="about-title">Hello, I'm Kristina.</h2>
                     <p class="about-lead">A designer focused on clarity, impact, and visual storytelling.</p>
                     <p>
@@ -126,22 +132,6 @@
                     <p>
                         I care about the small details and creating things that feel right.
                     </p>
-
-                    <h3 class="subhead">Capabilities</h3>
-                    <dl class="capabilities">
-                        <div>
-                            <dt>Digital Illustration</dt>
-                            <dd>Custom digital artwork, character design, and visual assets tailored to your brand's unique voice.</dd>
-                        </div>
-                        <div>
-                            <dt>Brand Identity</dt>
-                            <dd>Strategic logo design and comprehensive visual identity systems that communicate value and build trust.</dd>
-                        </div>
-                        <div>
-                            <dt>Visual Design</dt>
-                            <dd>Advanced image manipulation, layout composition, and creative direction for marketing materials.</dd>
-                        </div>
-                    </dl>
 
                     <ul class="tags" aria-label="Skills">
                         <li>Visual Strategy</li>
@@ -152,59 +142,69 @@
                     </ul>
                 </div>
             </div>
+
+            <h3 class="cards-title">Capabilities</h3>
+            <ul class="cards">
+                <li class="card-note">
+                    <h4>Digital Illustration</h4>
+                    <p>Custom digital artwork, character design, and visual assets tailored to your brand's unique voice.</p>
+                </li>
+                <li class="card-note">
+                    <h4>Brand Identity</h4>
+                    <p>Strategic logo design and comprehensive visual identity systems that communicate value and build trust.</p>
+                </li>
+                <li class="card-note">
+                    <h4>Visual Design</h4>
+                    <p>Advanced image manipulation, layout composition, and creative direction for marketing materials.</p>
+                </li>
+            </ul>
         </section>
 
         <!-- Process -->
-        <section id="process" class="section section-process" aria-labelledby="process-title">
-            <div class="container">
-                <div class="section-head">
-                    <h2 id="process-title">My Process</h2>
-                </div>
-                <ol class="process">
-                    <li>
-                        <h3>Discover</h3>
-                        <p>Analyzing the market landscape and defining the core problem to solve.</p>
-                    </li>
-                    <li>
-                        <h3>Concept</h3>
-                        <p>Translating strategy into viable visual directions and initial sketches.</p>
-                    </li>
-                    <li>
-                        <h3>Design</h3>
-                        <p>Executing high-fidelity visuals with a focus on aesthetics and function.</p>
-                    </li>
-                    <li>
-                        <h3>Refine</h3>
-                        <p>Iterating based on feedback to polish every detail to perfection.</p>
-                    </li>
-                    <li>
-                        <h3>Deliver</h3>
-                        <p>Providing optimized, production-ready assets for all use cases.</p>
-                    </li>
-                </ol>
-            </div>
+        <section id="process" class="section container" aria-labelledby="process-title">
+            <p class="tape">How I work</p>
+            <h2 id="process-title">My Process</h2>
+            <ol class="process">
+                <li>
+                    <h3>Discover</h3>
+                    <p>Analyzing the market landscape and defining the core problem to solve.</p>
+                </li>
+                <li>
+                    <h3>Concept</h3>
+                    <p>Translating strategy into viable visual directions and initial sketches.</p>
+                </li>
+                <li>
+                    <h3>Design</h3>
+                    <p>Executing high-fidelity visuals with a focus on aesthetics and function.</p>
+                </li>
+                <li>
+                    <h3>Refine</h3>
+                    <p>Iterating based on feedback to polish every detail to perfection.</p>
+                </li>
+                <li>
+                    <h3>Deliver</h3>
+                    <p>Providing optimized, production-ready assets for all use cases.</p>
+                </li>
+            </ol>
         </section>
 
         <!-- Contact -->
-        <section id="contact" class="section section-contact" aria-labelledby="contact-title">
-            <div class="container contact-grid">
+        <section id="contact" class="section container" aria-labelledby="contact-title">
+            <div class="contact-grid">
                 <div class="contact-info">
-                    <p class="eyebrow">Get In Touch</p>
+                    <p class="tape">Get In Touch</p>
                     <h2 id="contact-title">Ready to start your project?</h2>
                     <p>
                         I am currently accepting new freelance projects. If you are looking for a dedicated partner to elevate your brand visually, let's connect.
                     </p>
-                    <ul class="contact-links">
-                        <li>
-                            <a href="https://www.instagram.com/krisi.petrowa/" target="_blank" rel="noopener">
-                                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.225-.148-4.771-1.664-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.584.07-4.849.148-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.058 1.281-.072 1.689-.072 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.28.072-1.688.072-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.28-.058-1.688-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.44-.645 1.44-1.44s-.645-1.44-1.44-1.44z"/></svg>
-                                <span>Instagram</span>
-                            </a>
-                        </li>
-                    </ul>
+                    <a class="big-link" href="https://www.instagram.com/krisi.petrowa/" target="_blank" rel="noopener">
+                        <svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.225-.148-4.771-1.664-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.584.07-4.849.148-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.058 1.281-.072 1.689-.072 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.28.072-1.688.072-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.28-.058-1.688-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.44-.645 1.44-1.44s-.645-1.44-1.44-1.44z"/></svg>
+                        <span>Say hi on Instagram</span>
+                    </a>
                 </div>
 
                 <form id="contact-form" action="https://formspree.io/f/mgvgywpe" method="POST" class="contact-form" novalidate>
+                    <p class="form-title" aria-hidden="true">Write me a note</p>
                     <div class="field">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your full name" aria-describedby="name-error" data-error="Please tell me your name.">
@@ -244,28 +244,29 @@
         </div>
     </footer>
 
-    <!-- Project viewer (filled by js/main.js) -->
+    <!-- Project viewer (filled by js/main.js); background takes the project's "tone" colour -->
     <dialog id="viewer" class="viewer" aria-labelledby="viewer-title">
         <div class="viewer-bar">
             <span class="viewer-count" id="viewer-count"></span>
             <span class="visually-hidden" id="viewer-live" aria-live="polite"></span>
             <span class="viewer-toast" id="viewer-toast" role="status"></span>
             <div class="viewer-controls">
-                <button type="button" class="viewer-btn viewer-share" id="viewer-share" aria-label="Copy link to this project"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
-                <button type="button" class="viewer-btn" id="viewer-prev" aria-label="Previous project"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <button type="button" class="viewer-btn" id="viewer-next" aria-label="Next project"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-                <button type="button" class="viewer-btn" id="viewer-close" aria-label="Close"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+                <button type="button" class="viewer-btn" id="viewer-share" aria-label="Copy link to this project"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+                <button type="button" class="viewer-btn" id="viewer-prev" aria-label="Previous project"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                <button type="button" class="viewer-btn" id="viewer-next" aria-label="Next project"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+                <button type="button" class="viewer-btn" id="viewer-close" aria-label="Close"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
             </div>
         </div>
         <div class="viewer-body">
             <div class="viewer-stage">
-                <img class="viewer-img" id="viewer-img" src="data:," alt="">
+                <div class="sticker viewer-sticker"><img class="viewer-img" id="viewer-img" src="data:," alt=""></div>
             </div>
             <div class="viewer-info">
-                <p class="viewer-label" id="viewer-label"></p>
+                <p class="tape" id="viewer-label"></p>
                 <h2 class="viewer-title" id="viewer-title" tabindex="-1" autofocus>Project</h2>
                 <p class="viewer-desc" id="viewer-desc"></p>
                 <dl class="viewer-facts" id="viewer-facts"></dl>
+                <div class="viewer-swatches" id="viewer-swatches" role="group" aria-label="Colours used in this piece"></div>
                 <div class="viewer-concepts" id="viewer-concepts" role="group" aria-label="Design directions"></div>
                 <div class="viewer-thumbs" id="viewer-thumbs"></div>
                 <p class="viewer-hint" aria-hidden="true">Arrow keys to browse &nbsp;·&nbsp; Esc to close</p>

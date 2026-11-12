@@ -11,7 +11,10 @@ What it does to every image:
   * applies the camera/app rotation flag (EXIF orientation) to the pixels
   * converts Display P3 / Adobe RGB to sRGB so colours look the same everywhere
   * shrinks so the longest side is at most 800 px and 1600 px
-  * saves WebP (quality 80) without metadata
+  * saves WebP (quality 80) without metadata (transparency is kept, so
+    character cut-outs stay cut out)
+  * prints ready-to-paste values for js/projects.js: cover, width, height
+    and the colours (tone, pop, swatches) measured from the artwork
 
 Usage (needs Python 3 and Pillow:  pip install Pillow):
     python3 tools/optimize_images.py                        # everything in originals/
@@ -22,6 +25,7 @@ No Python? Use https://squoosh.app instead: WebP, quality 80, resize the
 longest side to 800 and to 1600, and name the files <name>-800.webp /
 <name>-1600.webp in images/projects/<project-slug>/.
 """
+import colorsys
 import io
 import sys
 from pathlib import Path
@@ -50,6 +54,37 @@ def to_srgb(im: Image.Image) -> Image.Image:
     return im
 
 
+def palette(im: Image.Image) -> tuple[str, str, list[str]]:
+    """Measure the artwork's colours: a dark 'tone' for the viewer background,
+    a bright 'pop' accent and 5 swatches (most used colours first)."""
+    small = im.convert("RGB")
+    small.thumbnail((160, 160))
+    q = small.quantize(colors=10, method=Image.Quantize.MEDIANCUT)
+    pal = q.getpalette()
+    colours = []
+    for count, idx in sorted(q.getcolors(), reverse=True):
+        r, g, b = pal[idx * 3: idx * 3 + 3]
+        h, l, sat = colorsys.rgb_to_hls(r / 255, g / 255, b / 255)
+        colours.append({"hex": f"#{r:02x}{g:02x}{b:02x}", "h": h, "l": l, "s": sat, "n": count})
+
+    def distinct(cols, limit):
+        out = []
+        for c in cols:
+            if all(abs(c["l"] - o["l"]) + abs(c["s"] - o["s"]) + min(abs(c["h"] - o["h"]), 1 - abs(c["h"] - o["h"])) > 0.12 for o in out):
+                out.append(c)
+            if len(out) == limit:
+                break
+        return out
+
+    swatches = [c["hex"] for c in distinct(colours, 5)]
+    pop = max(colours, key=lambda c: c["s"] * (1 - abs(c["l"] - 0.55)) * (c["n"] ** 0.25))
+    base = max(colours, key=lambda c: c["n"] * (0.3 + c["s"]))
+    # tone: the main hue, darkened until white text reads comfortably on it
+    r, g, b = colorsys.hls_to_rgb(base["h"], min(base["l"], 0.2), min(base["s"], 0.7))
+    tone = f"#{int(r * 255):02x}{int(g * 255):02x}{int(b * 255):02x}"
+    return tone, pop["hex"], swatches
+
+
 def process(path: Path) -> None:
     out_dir = DST / path.parent.relative_to(SRC)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -66,6 +101,8 @@ def process(path: Path) -> None:
         if size == SIZES[0]:
             base = str(target.relative_to(ROOT)).removesuffix(f"-{size}.webp")
             print(f'   → for projects.js:  cover: "{base}",  width: {copy.width}, height: {copy.height},')
+            tone, pop, swatches = palette(im)
+            print(f'   → colours:          tone: "{tone}", pop: "{pop}", swatches: {swatches},'.replace("'", '"'))
 
 
 def main() -> None:

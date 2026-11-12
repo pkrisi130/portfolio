@@ -32,10 +32,11 @@ Live site: https://pkrisi130.github.io/portfolio/ *(update this line if the addr
      description: "One or two sentences about the project.",
      // optional:
      year: 2026,
-     type: "Self-initiated",            // or "Client project", "Student work"
+     type: "Personal project",           // or "Client project", "Course project"
      tools: ["Procreate", "Illustrator"],
-     fit: "contain",                    // show the whole image (good for posters, logos, covers)
-     background: "#f3e2c7",             // tile colour behind a "contain" image
+     tone: "#3a2a17", pop: "#d9a35a",   // viewer background + accent (the image tool suggests these)
+     swatches: ["#917e66", "#765425", "#18110f"],  // paint chips shown in the viewer
+     cutout: "images/projects/summer-poster/character",  // transparent character, see below
      images: ["images/projects/summer-poster/poster", "images/projects/summer-poster/mockup"]
    },
    ```
@@ -54,14 +55,25 @@ still works and the browser console (F12 → Console) tells you what's missing.
 |---|---|
 | Filter buttons | `FILTERS` at the top of `js/projects.js` (buttons with no projects hide themselves) |
 | Hide a project without deleting it | add `hidden: true` to it |
-| Big tile at the top of the grid | `featured: "large"` (one project) |
-| Crop position of a tile | `focus: "50% 20%"` (left–right %, top–bottom %) |
+| Stickers around the name at the top | `HERO_STICKERS` at the top of `js/projects.js` (which projects, position, size, tilt) |
 | About text, process, contact text | `index.html` |
 | Portrait photo | replace `images/about/kristina-portrait-800.webp` and `-1600.webp` |
-| Colours, fonts, spacing | the `:root` block at the top of `css/styles.css` |
+| Mat colour, yellow accent, fonts, spacing | the `:root` block at the top of `css/styles.css` |
 | Social share picture | `images/og/og-image.jpg` (1200 × 630) |
 
 ---
+
+## Character cut-outs (die-cut stickers)
+
+A character exported with a **transparent background** becomes a real die-cut sticker at the top
+of the page: the white edge follows the character's outline and visitors can drag it around.
+
+1. In Procreate: hide the background layer → Share → **PNG**. At least 2000 px on the longest side,
+   with a little empty space around the character.
+2. Put it in `originals/projects/<slug>/` and run `python3 tools/optimize_images.py`
+   (transparency is kept), or export WebP with transparency from Squoosh.
+3. Add `cutout: "images/projects/<slug>/<name>"` to that project in `js/projects.js`.
+   If the project is listed in `HERO_STICKERS`, the cut-out is used automatically.
 
 ## Sharing a single project
 
