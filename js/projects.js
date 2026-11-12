@@ -60,7 +60,7 @@ const HERO_STICKERS = [
 const PROJECTS = [
   {
     slug: "jeep-ad",
-    title: "Ad For Jeep",
+    title: "Where Desert Calls",
     filter: "advertising",
     label: "Advertising",
     cover: "images/projects/jeep-ad/jeep-ad",
@@ -72,7 +72,7 @@ const PROJECTS = [
   },
   {
     slug: "goran-bakery",
-    title: "Goran Logo",
+    title: "Goran Goko Bakery",
     filter: "branding",
     label: "Brand Identity",
     cover: "images/projects/goran-bakery/01-logo",
@@ -102,7 +102,7 @@ const PROJECTS = [
   },
   {
     slug: "alice-book-cover",
-    title: "Book Cover Alice",
+    title: "Alice in Wonderland",
     filter: "books",
     label: "Book Cover Design",
     cover: "images/projects/alice-book-cover/cover",
@@ -114,7 +114,7 @@ const PROJECTS = [
   },
   {
     slug: "gamer-room",
-    title: "Room Design",
+    title: "Game Over Room",
     filter: "isometric",
     label: "Isometric Design",
     cover: "images/projects/gamer-room/room",
@@ -126,7 +126,7 @@ const PROJECTS = [
   },
   {
     slug: "character-01",
-    title: "Character 1",
+    title: "Sneaker Bird",
     filter: "characters",
     label: "Character Design",
     cover: "images/projects/character-01/character",
@@ -138,7 +138,7 @@ const PROJECTS = [
   },
   {
     slug: "character-02",
-    title: "Character 2",
+    title: "Fuzzy Dance",
     filter: "characters",
     label: "Character Design",
     cover: "images/projects/character-02/character",
@@ -150,7 +150,7 @@ const PROJECTS = [
   },
   {
     slug: "character-03",
-    title: "Character 3",
+    title: "Sunset Drive",
     filter: "characters",
     label: "Character Design",
     cover: "images/projects/character-03/character",
@@ -162,7 +162,7 @@ const PROJECTS = [
   },
   {
     slug: "me-and-you",
-    title: "Me And You",
+    title: "Me and You",
     filter: "characters",
     label: "Character Design",
     cover: "images/projects/me-and-you/me-and-you",
@@ -174,7 +174,7 @@ const PROJECTS = [
   },
   {
     slug: "bright-tv",
-    title: "Bright TV",
+    title: "Movie Night",
     filter: "illustration",
     label: "Cute Drawings",
     cover: "images/projects/bright-tv/bright-tv",
@@ -186,7 +186,7 @@ const PROJECTS = [
   },
   {
     slug: "night",
-    title: "Night Pic",
+    title: "Evening Light",
     filter: "illustration",
     label: "Atmospheric Art",
     cover: "images/projects/night/night",
@@ -198,7 +198,7 @@ const PROJECTS = [
   },
   {
     slug: "big-man",
-    title: "Bigman",
+    title: "Giant Steps",
     filter: "illustration",
     label: "Surreal Scenes",
     cover: "images/projects/big-man/big-man",
@@ -210,7 +210,7 @@ const PROJECTS = [
   },
   {
     slug: "traveller",
-    title: "Traveller",
+    title: "The Traveller",
     filter: "illustration",
     label: "Surreal Scenes",
     cover: "images/projects/traveller/traveller",
@@ -222,7 +222,7 @@ const PROJECTS = [
   },
   {
     slug: "cat",
-    title: "Cat",
+    title: "Moon Cat",
     filter: "illustration",
     label: "Cute Drawings",
     cover: "images/projects/cat/cat",
@@ -236,7 +236,7 @@ const PROJECTS = [
     // Found in the repo but never shown on the old site. Set hidden: false
     // (and give it a real title/description) to publish it.
     slug: "chilling",
-    title: "Chilling",
+    title: "Rooftop Stargazing",
     filter: "illustration",
     label: "Illustration",
     cover: "images/projects/chilling/chilling",
