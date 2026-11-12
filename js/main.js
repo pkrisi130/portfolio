@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (heroBox && heroList.length) {
         const phone = window.matchMedia('(max-width: 639px)').matches;
         // On phones the stickers gather in a cluster above the name
-        const phoneSpots = [{ x: 2, y: 6 }, { x: 54, y: 2 }, { x: 28, y: 34 }, { x: 64, y: 44 }, { x: 4, y: 52 }, { x: 42, y: 60 }];
+        const phoneSpots = [{ x: 0, y: 4 }, { x: 35, y: 0 }, { x: 2, y: 52 }, { x: 68, y: 50 }, { x: 70, y: 0 }, { x: 36, y: 54 }];
         // Touch screens: stickers are tap-to-open only, so swiping over them still scrolls the page
         const canDrag = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
         let z = 10;
@@ -193,6 +193,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sticker.style.setProperty('--w', `${h.w || 180}px`);
             sticker.style.setProperty('--r', `${h.r || 0}deg`);
             heroBox.append(sticker);
+            // keep every sticker fully inside the hero, whatever the screen width
+            const maxLeft = heroBox.clientWidth - sticker.offsetWidth - 4;
+            if (sticker.offsetLeft > maxLeft) sticker.style.left = `${Math.max(0, maxLeft)}px`;
 
             if (!reduceMotion) {
                 sticker.animate(
@@ -284,8 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const vImg = $('viewer-img'), vTitle = $('viewer-title'), vLabel = $('viewer-label'),
               vDesc = $('viewer-desc'), vFacts = $('viewer-facts'), vConcepts = $('viewer-concepts'),
               vThumbs = $('viewer-thumbs'), vCount = $('viewer-count'), vLive = $('viewer-live'),
-              vToast = $('viewer-toast'), vShare = $('viewer-share'), vSwatches = $('viewer-swatches'),
-              vTiktok = $('viewer-tiktok');
+              vToast = $('viewer-toast'), vShare = $('viewer-share'), vSwatches = $('viewer-swatches');
         const HEX = /^#[0-9a-f]{3}([0-9a-f]{3})?$/i;
         const HASH_PREFIX = '#work/';
         let current = -1;
@@ -348,13 +350,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 chip.style.background = c;
                 return el('span', { class: 'swatch' }, [chip, document.createTextNode(c.toUpperCase())]);
             }));
-            if (p.tiktok && /^https:\/\/(www\.|vm\.)?tiktok\.com\//.test(p.tiktok)) {
-                vTiktok.href = p.tiktok;
-                vTiktok.hidden = false;
-            } else {
-                vTiktok.hidden = true;
-                vTiktok.removeAttribute('href');
-            }
             vTitle.textContent = p.title;
             vDesc.textContent = p.description || '';
             vDesc.hidden = !p.description;

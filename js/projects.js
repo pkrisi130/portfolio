@@ -27,9 +27,8 @@
                          (tools/optimize_images.py suggests tone/pop/swatches)
    cutout                path (without -800.webp) of a transparent PNG/WebP of the
                          character; used as a die-cut sticker in the hero
-   tiktok                link to the process video, shown as a button in the viewer
    year, type, client, role, tools   optional facts shown in the viewer
-                         (type: "Client project", "Self-initiated", "Student work")
+                         (type: "Client project", "Personal project", "Course project")
    images                extra images for the viewer (paths without -800/-1600)
    concepts              instead of images: several directions, each with a label
                          [{ label: "Concept 01", images: [...] }, ...]
@@ -50,11 +49,12 @@ const FILTERS = [
    On phones they gather in a cluster above the name automatically.
    If a project has a "cutout" (transparent character), that is used instead of the cover. */
 const HERO_STICKERS = [
-  { slug: "goran-bakery", x: 64, y: 4,  w: 230, r: 7 },
-  { slug: "character-01", x: 82, y: 40, w: 150, r: -9 },
-  { slug: "bright-tv",    x: 58, y: 52, w: 200, r: -5 },
-  { slug: "cat",          x: 86, y: 74, w: 130, r: 10 },
-  { slug: "character-03", x: 70, y: 82, w: 170, r: 4 }
+  { slug: "goran-bakery", x: 62, y: 2,  w: 220, r: 6 },
+  { slug: "character-01", x: 84, y: 30, w: 150, r: -6 },
+  { slug: "bright-tv",    x: 56, y: 50, w: 190, r: -5 },
+  { slug: "character-02", x: 77, y: 60, w: 210, r: 5 },
+  { slug: "cat",          x: 90, y: 6,  w: 120, r: 9 },
+  { slug: "character-03", x: 64, y: 80, w: 150, r: -3 }
 ];
 
 const PROJECTS = [
@@ -68,7 +68,8 @@ const PROJECTS = [
     alt: "A jeep drives out of a framed desert photo under the line “Where desert calls, Jeep answers”",
     description: "An adventurous advertising concept designed to capture the rugged, unrestrained spirit of the open road.",
     tone: "#2e2112", pop: "#d9a35a",
-    swatches: ["#917e66", "#765425", "#664932", "#18110f", "#8a6c4a"]
+    swatches: ["#917e66", "#765425", "#664932", "#18110f", "#8a6c4a"],
+    type: "Course project"
   },
   {
     slug: "goran-bakery",
@@ -110,7 +111,8 @@ const PROJECTS = [
     alt: "Alice in Wonderland wraparound book cover: Alice walks through a keyhole-shaped forest",
     description: "A whimsical redesign capturing the surreal, magical essence of Wonderland through vibrant digital illustration.",
     tone: "#24161a", pop: "#c3a59d",
-    swatches: ["#543d3c", "#7c6160", "#37191c", "#c3a59d", "#0b0509"]
+    swatches: ["#543d3c", "#7c6160", "#37191c", "#c3a59d", "#0b0509"],
+    type: "Course project"
   },
   {
     slug: "gamer-room",
@@ -134,7 +136,8 @@ const PROJECTS = [
     alt: "A long-necked spotted bird character in yellow sneakers",
     description: "A study in distinct shape language and expressive personality, brought to life through clean digital strokes.",
     tone: "#5d5b57", pop: "#f0b33a",
-    swatches: ["#a09e9a", "#8d7f68", "#6a352d", "#c0ab89", "#f0b33a"]
+    swatches: ["#a09e9a", "#8d7f68", "#6a352d", "#c0ab89", "#f0b33a"],
+    cutout: "images/projects/character-01/character-cutout"
   },
   {
     slug: "character-02",
@@ -146,7 +149,8 @@ const PROJECTS = [
     alt: "A fuzzy yellow-green creature dancing",
     description: "A vibrant exploration of street-style aesthetics, emphasizing dynamic poses and modern fashion.",
     tone: "#3d3c08", pop: "#c8c41a",
-    swatches: ["#a09c03", "#898404", "#d8d798", "#adab1b", "#f9f9f1"]
+    swatches: ["#a09c03", "#898404", "#d8d798", "#adab1b", "#f9f9f1"],
+    cutout: "images/projects/character-02/character-cutout"
   },
   {
     slug: "character-03",
@@ -230,7 +234,8 @@ const PROJECTS = [
     alt: "A black cat stepping over a yellow moon reflection on a navy square",
     description: "A minimalist, charming depiction of a feline companion, using bold contrast and simple geometric forms.",
     tone: "#14244a", pop: "#f5c518",
-    swatches: ["#1c325f", "#998e63", "#0a111f", "#f5c518", "#ffffff"]
+    swatches: ["#1c325f", "#998e63", "#0a111f", "#f5c518", "#ffffff"],
+    cutout: "images/projects/cat/cat-cutout"
   },
   {
     // Found in the repo but never shown on the old site. Set hidden: false

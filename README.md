@@ -32,11 +32,10 @@ Live site: https://pkrisi130.github.io/portfolio/ *(update this line if the addr
      description: "One or two sentences about the project.",
      // optional:
      year: 2026,
-     type: "Self-initiated",            // or "Client project", "Student work"
+     type: "Personal project",           // or "Client project", "Course project"
      tools: ["Procreate", "Illustrator"],
      tone: "#3a2a17", pop: "#d9a35a",   // viewer background + accent (the image tool suggests these)
      swatches: ["#917e66", "#765425", "#18110f"],  // paint chips shown in the viewer
-     tiktok: "https://www.tiktok.com/@…/video/…",  // "Watch the process" button
      cutout: "images/projects/summer-poster/character",  // transparent character, see below
      images: ["images/projects/summer-poster/poster", "images/projects/summer-poster/mockup"]
    },

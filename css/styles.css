@@ -239,7 +239,7 @@ button, input, textarea { font: inherit; color: inherit; }
     padding-block: clamp(1.5rem, 1rem + 3vw, 3.5rem) clamp(3rem, 2rem + 4vw, 5rem);
     display: flex; flex-direction: column; justify-content: center;
 }
-.hero-text { position: relative; z-index: 2; max-width: 860px; pointer-events: none; }
+.hero-text { position: relative; z-index: 2; max-width: min(860px, 56%); pointer-events: none; }
 .hero-text > * { pointer-events: auto; }
 .hero h1 {
     font-weight: 800;
@@ -561,12 +561,6 @@ html:has(.viewer[open]) { overflow: hidden; }
 .thumb[aria-current="true"] { outline: 3px solid var(--pop); outline-offset: 2px; }
 @media (hover: hover) { .thumb:hover { transform: rotate(0) scale(1.07); } }
 
-.viewer-tiktok {
-    display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; min-height: 48px; padding: 0 20px;
-    border-radius: 999px; background: var(--paper); color: var(--paper-ink);
-    font: 700 0.95rem/1 var(--display); text-decoration: none;
-}
-.viewer-tiktok[hidden] { display: none; }
 .viewer-hint { display: none; margin-top: 26px; font: 500 0.75rem/1 var(--mono); color: rgb(255 255 255 / 70%); }
 @media (hover: hover) and (pointer: fine) { .viewer-hint { display: block; } }
 
@@ -577,8 +571,10 @@ html:has(.viewer[open]) { overflow: hidden; }
     .wordmark { font-size: 1rem; }
     .nav-links a { padding: 0 9px; font-size: 0.92rem; }
     .hero { min-height: 0; justify-content: flex-start; }
-    .hero-stickers { position: relative; inset: auto; order: -1; height: 250px; margin-bottom: 4px; }
-    .loose { --w: 118px !important; }
+    .hero-text { max-width: none; }
+    .hero-stickers { position: relative; inset: auto; order: -1; height: 262px; margin-bottom: 4px; }
+    .loose { --w: 112px !important; }
+    .loose.cutout { --w: 100px !important; }
     .card-title { font-size: 0.95rem; }
     .viewer-btn { width: 46px; height: 46px; }
     .viewer-controls { gap: 6px; }
