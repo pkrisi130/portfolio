@@ -1,0 +1,10 @@
+# Full-size exports live here locally; only web versions in images/ are committed
+originals/
+
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
