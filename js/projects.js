@@ -238,8 +238,6 @@ const PROJECTS = [
     cutout: "images/projects/cat/cat-cutout"
   },
   {
-    // Found in the repo but never shown on the old site. Set hidden: false
-    // (and give it a real title/description) to publish it.
     slug: "chilling",
     title: "Rooftop Stargazing",
     filter: "illustration",
@@ -247,8 +245,7 @@ const PROJECTS = [
     cover: "images/projects/chilling/chilling",
     width: 800, height: 613,
     alt: "A girl lying on the roof of a van under a purple, starry night sky",
-    description: "",
-    hidden: true,
+    description: "A quiet night on the road: lying on the roof of the van under a purple sky full of stars.",
     tone: "#3a2a3d", pop: "#d28cba",
     swatches: ["#6f61aa", "#3a2a3d", "#d28cba", "#201e2e", "#b484bd"]
   }
